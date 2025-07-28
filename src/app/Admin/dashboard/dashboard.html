@@ -1,0 +1,130 @@
+<div class="flex h-full bg-white">
+  <!-- sidebar -->
+  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+      <img src="logo_clinic.png" alt="logo de la clinique">
+    </div>
+    <div class="flex flex-col">
+      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]" [routerLink]="['/dashboard']" routerLinkActive="active">
+          <i class='fas fa-chart-pie h-6 w-6 mr-2'></i> Dashboard
+        </a>
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]" [routerLink]="['/utilisateurs']" routerLinkActive="active">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+            />
+          </svg> Utilisateurs
+        </a>
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]" [routerLink]="['/patients']" routerLinkActive="active">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round"
+              d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+            />
+          </svg> Patients
+        </a>
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]">
+          <svg xmlns="http://www.w3.org/2000/svg"  class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round"
+              d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+            />
+          </svg> Messagerie
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex flex-col flex-1 bg-white">
+    <div class="flex justify-between items-center mb-6 bg-white">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800 my-5">Dashboard</h1>
+        <span class="text-sm font-bold text-gray-800">Home</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="relative">
+          <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Acsec)]"></span>
+          <i class='far fa-bell text-3xl'></i>
+        </button>
+        <div class="flex items-center space-x-2">
+          <img src="doc1.png" class="w-10 h-10 rounded-full object-cover border-2 border-gray-300" alt="avatar" />
+          <span class="font-semibold text-gray-700">Dr. Atangana A. T.</span>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Statistiques globales -->
+    <div class="bg-[#eee] rounded-lg shadow p-6 mb-6 mx-3">
+      <h2 class="text-3xl font-semibold text-gray-700 mb-5">Statistiques globales</h2>
+      <hr class="mb-6 border-[#9f9fff] border-3 rounded-lg" />
+
+      <!-- premier bloc de statistiques -->
+      <div class="bg-[#9f9fff] w-1/2 rounded-4xl shadow p-1.5 mb-6">
+        <p class="text-white text-xs p-1.5">Ce Compte</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-fit">
+            <div class="flex space-x-2 bg-white rounded-lg p-2">
+                <div class="w-1/2 h-1/2">
+                    <img src="doc1.png" class="w-full h-full rounded-sm object-cover" alt="profil" />
+                </div>
+              <div class="w-1/2">
+                <p class="text-sm text-[#9f9fff]">Connecté depuis le</p>
+                <hr class="mb-4 border-[#9f9fff]" />
+                <p class=" text-[#9f9fff]">10 avr. 2025 à <br> <span class="txt-lg">08H02</span></p>
+              </div>
+            </div>
+            <div class="flex space-x-2 bg-white rounded-lg p-4">
+              <div>
+                <p class="text-xs text-[#9f9fff]">Action récente</p>
+                <hr class="mb-4 border-[#9f9fff]" />
+                <ul class="text-sm text-center list-disc px-3">
+                  <li>Message de la secrétaire Tchanga</li>
+                  <li>Suppression du compte de Dr BK</li>
+                  <li>Modification des informations de...</li>
+                </ul>
+                <div class="text-right">
+                  <button class=" text-gray-400 text-sm">Voir Plus</button>
+                </div>
+              </div>
+            </div>           
+        </div>
+            <div class="flex items-center space-x-2 bg-white rounded-lg p-1 my-2">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-1 w-full">
+                <div class="flex items-center space-x-2 bg-violet-200 rounded-lg p-4">
+                  <p class="text-sm">Connexion admin</p>
+                </div>
+                <div class="flex items-center space-x-2 bg-violet-200 rounded-lg p-4">
+                  <p class="text-sm">Duration</p>
+                </div>
+                <div class="flex items-center space-x-2 bg-violet-200 rounded-lg p-4">
+                  <p class="text-sm">Connexion admin</p>
+                </div>
+                <div class="flex items-center space-x-2 bg-violet-200 rounded-lg p-4">
+                  <p class="text-sm">Duration</p>
+                </div>
+              </div>
+            </div>
+      </div>
+      <!-- 2ème bloc de statistiques avec les graphes -->
+      <div class="flex justify-items-center-center w-full gap-1">
+        <div class="w-3/4">
+          <div class="bg-[#9f9fff] rounded-lg shadow p-4 space-x-4">
+            <div class="font-semibold text-gray-700 mb-2">Revenus en dizaine de dollars par mois</div>
+            <div class="h-16 bg-white flex items-center justify-center text-gray-400">[Graphique]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- bannière du bas de page -->
+      <div class="mt-2 flex flex-wrap gap-4 text-md text-white bg-[#9f9fff] w-3/4 rounded-2xl shadow p-3">
+        <span><i class='far fa-clock'></i> Ping : 30ms</span>
+        <span><i class='fas fa-users'></i> Uti. connecté(s)</span>
+        <span><i class='far fa-user'></i> idle : 5</span>
+        <span><i class="fa fa-podcast"></i> Bande pass : 500mo</span>
+        <span><i class='fas fa-laptop-code'></i> Poids total : 3.4Go</span>
+      </div>
+    </div>  
+  </div>
+</div>
+<!-- <app-dashboard></app-dashboard> -->

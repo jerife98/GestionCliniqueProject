@@ -1,0 +1,216 @@
+<div class="flex h-screen bg-white">
+  <!-- sidebar -->
+  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+      <img src="logo_clinic.png" alt="logo de la clinique" />
+    </div>
+    <div class="flex flex-col h-screen">
+      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+        <a
+          href="#"
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/dashboard']"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Dashboard
+        </a>
+        <a
+          href="#"
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/utilisateurs']"
+          routerLinkActive="active"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
+            />
+          </svg>
+          Utilisateurs
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/patients']"
+          routerLinkActive="active"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
+            />
+          </svg>
+          Patients
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 mr-2"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
+            />
+          </svg>
+          Messagerie
+        </a>
+      </nav>
+    </div>
+  </div>
+    <!-- Main content -->
+  <div class="flex flex-col flex-1 bg-white">
+    <div class="flex justify-between items-center my-6 bg-white">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Gestion des Utilisateurs</h1>
+      <nav class="flex mt-3" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+          <li>
+            <div class="flex items-center">
+              <a class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white" [routerLink]="['/utilisateurs']" routerLinkActive="active">
+                Liste des Utilisateurs</a>
+            </div>
+          </li>
+          <li aria-current="page">
+            <div class="flex items-center">
+              <svg class="rtl:rotate-180 w-3 h-3 text-gray-700 mx-1  hover:text-blue-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+              </svg>
+              <a class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400" [routerLink]="['/create-user']" routerLinkActive="active">Création des Utilisateurs</a>
+            </div>
+          </li>
+        </ol>
+      </nav>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="relative">
+          <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Asec)]"></span>
+          <i class='far fa-bell text-3xl'></i>
+        </button>
+        <div class="flex items-center space-x-2">
+          <img src="doc1.png" class="w-10 h-10 rounded-full object-cover border-2 border-gray-300" alt="avatar" />
+          <span class="font-semibold text-gray-700">Dr. Atangana A. T.</span>
+        </div>
+      </div>
+    </div>
+      
+              <!-- Barre de recherche -->
+            <div class="my-4 flex justify-between mx-4">
+                <input
+                type="text"
+                [(ngModel)]="searchText"
+                placeholder="Tapez votre recherche ici"
+                class="md:w-3/5 p-3 rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-[var(--Aprim)]"
+                
+                />
+                <button type="button" class="bg-[#9f9fff] rounded-3xl p-3 w-1/5 text-white" [routerLink]="['/create-user']" routerLinkActive="active">Nouvel utilisateur</button>
+            </div>
+
+  
+    <!-- Statistiques globales -->
+    <div class="bg-[var(--Aprim)] rounded-3xl shadow p-6 mb-6 mx-3">
+        <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-700 mb-5">Utilisateurs</h2>
+                </div>
+                <div class="flex justify-center items-center gap-2 mb-5" *ngIf="totalPages() > 1">
+                    <button
+                        class="px-3 py-1 rounded border text-gray-500"
+                        [disabled]="currentPage === 1"
+                        (click)="goToPage(currentPage - 1)"
+                    >
+                        Précédent
+                    </button>
+                    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+                        <button
+                        class="px-3 py-1 rounded border"
+                        [class.bg-blue-200]="currentPage === i+1"
+                        (click)="goToPage(i+1)"
+                        >   {{ i + 1 }}
+                        </button>
+                    </ng-container>
+                    <button
+                        class="px-3 py-1 rounded border text-gray-500"
+                        [disabled]="currentPage === totalPages()"
+                        (click)="goToPage(currentPage + 1)"
+                    >Suivant
+                    </button>
+                </div>
+        </div>
+      <hr class="mb-4 border-[#9f9fff] border-2" />
+      <!-- Pagination -->
+
+
+      <!-- formulaire de recherche des utilisateurs -->
+    <div class="p-6 space-y-4">  
+
+
+  <!-- Tableau des utilisateurs -->
+  <div class="overflow-x-auto rounded-lg shadow border border-white mt-6">
+    <table class="min-w-full divide-y divide-white text-sm">
+      <thead class="bg-[#9f9fff] text-white divide-x divide-white">
+        <tr>
+          <th class="px-4 py-2">Photo de Profil</th>
+          <th class="px-4 py-2">Nom</th>
+          <th class="px-4 py-2">Prenom</th>
+          <th class="px-4 py-2">Email</th>
+          <th class="px-4 py-2">Rôle</th>
+          <th class="px-4 py-2">Dern. connexion</th>
+          <th class="px-4 py-2">Statut</th>
+          <th class="px-4 py-2">Action</th>
+        </tr>
+      </thead>
+      <tbody class="divide-Y divide-black bg-white">
+        <tr *ngFor="let user of paginatedUsers()"
+        (click)="selectUser(user)" 
+        [class.bg-blue-100]="selectedUser?.email === user.email" 
+        style="cursor: pointer">
+          
+          <td class="px-4 py-2">{{ user.photoProfil }}</td>
+          <td class="px-4 py-2">{{ user.nom }}</td>
+          <td class="px-4 py-2">{{ user.prenom }}</td>
+          <td class="px-4 py-2">{{ user.email }}</td>
+          <td class="px-4 py-2">{{ user.role.roleType }}</td>
+          <td class="px-4 py-2">{{ user.lastLogin }}</td>
+          <td class="px-4 py-2">{{ user.actif }}</td>
+          <td class="px-4 py-2 flex space-x-2">
+            <button class="text-blue-600 hover:text-blue-800" [routerLink]="['/update-user']" routerLinkActive="active">
+            <i class="fas fa-toggle-off" style="transform: rotate(90deg); display: inline-block; font-size: 20px;" ></i>
+            </button>
+            <button class="text-red-600 hover:text-red-800">
+              <!-- Icône supprimer -->
+              <i class='far fa-trash-alt' style='font-size:20px'></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+</div>
+    
+
+    </div>
+</div>
+

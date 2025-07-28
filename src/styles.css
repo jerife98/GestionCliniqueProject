@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+:root {
+    --Aprim: #efefff;
+    --Apsec: #feffef;
+    --Pprim: #9f9fff;
+    --Psec : #f9ff9f;
+    --Acprim: #4141ff;
+    --Acsec: #f3ff41;
+    --Warning: #ff3838;
+    --Pass: #13df00;
+}

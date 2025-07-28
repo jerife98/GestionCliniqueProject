@@ -1,0 +1,50 @@
+<section class="flex justify-between items-center w-full h-screen">
+  <!-- Left: Image and Reception -->
+  <div class="w-1/2 h-full">
+    <img src="./loginpageimage/Clinik_Afrik.jpg" alt="Hall d'accueil de la clinique d'Afrique" class=" h-full w-full object-cover">
+  </div>
+  
+  <!-- Right: Login Form -->
+  <div class=" w-[50%] flex items-center justify-center">
+    <div class="max-w-md p-8">
+      <div class="mb-8 text-justify">
+        <img src="logo_clinic.png" alt="logo de la clinique">
+        <h4 class="text-[25px] font-semibold mb-2">Bonjour !</h4>
+        <p class="text-gray-600 text-[22px]">Connectez vous pour commencer à travailler.</p>
+      </div>
+      <form (ngSubmit)="onSubmit()">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm mb-1" for="email">Email</label>
+          <input
+          [(ngModel)]="email"
+          name="email"
+          required 
+          id="email"
+            type="email"
+            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Entrez votre email"
+          />
+          
+        </div>
+        <div class="mb-6">
+          <label class="block text-gray-700 text-sm mb-1" for="password">Mot de passe</label>
+          <input
+          [(ngModel)]="password"
+          name="password"
+          required 
+          id="password"
+            type="password"
+            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+            placeholder="Entrez votre mot de passe"
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-[var(--Acprim)] text-white font-semibold py-2 rounded hover:bg-blue-700 transition"
+        >
+          Se connecter →
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
