@@ -8,6 +8,9 @@ import { CreatePatient } from './Admin/patients/create-patient/create-patient';
 import { RendezVous } from './Medecin/rendez-vous/rendez-vous';
 import { Consultations } from './Medecin/consultations/consultations';
 import { Calendrier } from './Medecin/calendrier/calendrier';
+import { RDV } from './Secretaire/rdv/rdv';
+import { create } from 'domain';
+import { CreateRdv } from './Medecin/rendez-vous/create-rdv/create-rdv';
 
 export const routes: Routes = [
      {
@@ -44,11 +47,23 @@ export const routes: Routes = [
         component: RendezVous
     },
     {
+        path: 'create-rdv',
+        component: CreateRdv
+    },
+    {
         path: 'consultations',
         component: Consultations
     },
     {
         path: 'calendrier',
         component: Calendrier
+    },
+    {
+        path: 'secretaire',
+        component: RendezVous
+    },
+        {
+        path: 'consultations',
+        component: Consultations
     }
 ];

@@ -7,7 +7,6 @@
     <div class="flex flex-col h-screen">
       <nav class="flex-1 px-3 py-4 bg-[#feffef]">
         <a
-          href="#"
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/dashboard']"
           routerLinkActive="active"
@@ -15,7 +14,6 @@
           <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Dashboard
         </a>
         <a
-          href="#"
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/utilisateurs']"
           routerLinkActive="active"
@@ -77,12 +75,10 @@
     </div>
   </div>
   <!-- Main content -->
-  <div class="flex flex-col flex-1 bg-white">
-    <div class="flex justify-between items-center my-6 bg-white">
+  <div class="flex flex-col flex-1">
+    <div class="flex justify-between items-center my-6">
       <div>
-        <h1 class="text-3xl font-bold text-gray-800">
-          Gestion des Utilisateurs
-        </h1>
+        <h1 class="text-3xl font-bold text-gray-800">Gestion des patients</h1>
         <nav class="flex mt-3" aria-label="Breadcrumb">
           <ol
             class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
@@ -91,10 +87,10 @@
               <div class="flex items-center">
                 <a
                   class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-                  [routerLink]="['/utilisateurs']"
+                  [routerLink]="['/patients']"
                   routerLinkActive="active"
                 >
-                  Liste des Utilisateurs</a
+                  Liste des Patients</a
                 >
               </div>
             </li>
@@ -119,7 +115,7 @@
                   class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
                   [routerLink]="['/create-user']"
                   routerLinkActive="active"
-                  >Création des Utilisateurs</a
+                  >Création de patient</a
                 >
               </div>
             </li>
@@ -144,132 +140,109 @@
       </div>
     </div>
 
-    <!-- Barre de recherche -->
-    <div class="my-4 flex justify-between mx-4">
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder="Tapez votre recherche ici"
-        class="md:w-3/5 p-3 rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-[var(--Aprim)]"
-      />
-      <button
-        type="button"
-        class="bg-[#9f9fff] rounded-3xl p-3 w-1/5 text-white" data-modal-target="default-modal" data-modal-toggle="default-modal"
-        [routerLink]="['/create-user']"
-        routerLinkActive="active"
+    <!-- formulaire de recherche des utilisateurs -->
+    <div class="p-6 space-y-4">
+      <div
+        class="flex flex-col items-center justify-center min-h-screen bg-white"
       >
-        Nouvel utilisateur
-      </button>
-    </div>
-
-    <!-- Statistiques globales -->
-    <div class="bg-[var(--Aprim)] rounded-3xl shadow p-6 mb-6 mx-3">
-      <div class="flex justify-between items-center">
-        <div>
-          <h2 class="text-3xl font-bold text-gray-700 mb-5">Utilisateurs</h2>
-        </div>
-        <div
-          class="flex justify-center items-center gap-2 mb-5"
-          *ngIf="totalPages() > 1"
+        <form
+          [formGroup]="rdvForm"
+          (ngSubmit)="onSubmit()"
+          class="w-3/4 bg-[#eee] shadow-lg rounded-xl p-8 border border-gray-100"
         >
-          <button
-            class="px-3 py-1 rounded border text-gray-500"
-            [disabled]="currentPage === 1"
-            (click)="goToPage(currentPage - 1)"
-          >
-            Précédent
-          </button>
-          <ng-container
-            *ngFor="let page of [].constructor(totalPages()); let i = index"
-          >
-            <button
-              class="px-3 py-1 rounded border"
-              [class.bg-blue-200]="currentPage === i+1"
-              (click)="goToPage(i+1)"
-            >
-              {{ i + 1 }}
-            </button>
-          </ng-container>
-          <button
-            class="px-3 py-1 rounded border text-gray-500"
-            [disabled]="currentPage === totalPages()"
-            (click)="goToPage(currentPage + 1)"
-          >
-            Suivant
-          </button>
-        </div>
-      </div>
-      <hr class="mb-4 border-[#9f9fff] border-2" />
-      <!-- Pagination -->
+          <!-- Titre principal -->
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">
+            Créer un rendez-vous
+          </h2>
+          <hr class="mb-4 border-[#9f9fff] border-2" />
 
-      <!-- formulaire de recherche des utilisateurs -->
-      <div class="p-6 space-y-4">
-        <!-- Tableau des utilisateurs -->
-        <div class="overflow-x-auto rounded-lg shadow border border-white mt-6">
-          <table class="min-w-full divide-y divide-white text-sm">
-            <thead class="bg-[#9f9fff] text-white divide-x divide-white">
-              <tr>
-                <th class="px-4 py-2">Photo de Profil</th>
-                <th class="px-4 py-2">Nom</th>
-                <th class="px-4 py-2">Prenom</th>
-                <th class="px-4 py-2">Email</th>
-                <th class="px-4 py-2">Rôle</th>
-                <th class="px-4 py-2">Dern. connexion</th>
-                <th class="px-4 py-2">Statut</th>
-                <th class="px-4 py-2">Action</th>
-              </tr>
-            </thead>
-            <tbody class="divide-Y divide-black bg-white">
-              <tr *ngFor="let user of paginatedUsers()" (click)="openUserModal(user)">
-                <td class="px-4 py-2">{{ user.photoProfil }}</td>
-                <td class="px-4 py-2">{{ user.nom }}</td>
-                <td class="px-4 py-2">{{ user.prenom }}</td>
-                <td class="px-4 py-2">{{ user.email }}</td>
-                <td class="px-4 py-2">{{  user.role.roleType}}</td>
-                <td class="px-4 py-2">{{ user.lastLogin }}</td>
-                <td class="px-4 py-2">{{ user.actif }}</td>
-                <td class="px-4 py-2 flex space-x-2">
-                  <button
-                    class="text-blue-600 hover:text-blue-800"
-                    [routerLink]="['/update-user']"
-                    routerLinkActive="active"
-                  >
-                    <i
-                      class="fas fa-toggle-off"
-                      style="
-                        transform: rotate(90deg);
-                        display: inline-block;
-                        font-size: 20px;
-                      "
-                    ></i>
-                  </button>
-                  <button class="text-red-600 hover:text-red-800" (click)="deleteUser(user); $event.stopPropagation()">
-                    <i class="far fa-trash-alt" style="font-size: 20px"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <!-- Informations générales -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-600 mb-2">
+              Informations générales
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-gray-700 mb-1">Patient</label>
+                <select
+                  formControlName="patientId"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                  <option *ngFor="let patient of patients" [value]="patient.id">
+                    {{ patient.nom }} {{ patient.prenom }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Médecin</label>
+                <select
+                  formControlName="medecinId"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                  <option *ngFor="let medecin of medecins" [value]="medecin.id">
+                    {{ medecin.nom }} {{ medecin.prenom }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Jour</label>
+                <input
+                  formControlName="jour"
+                  required
+                  type="date"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Heure</label>
+                <input
+                  formControlName="heure"
+                  required
+                  type="time"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Notes</label>
+                <textarea
+                  formControlName="notes"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  placeholder="Notes"
+                ></textarea>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Service médical</label>
+                <select
+                  formControlName="serviceMedical"
+                  required
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                >
+                  <option *ngFor="let service of services" [value]="service">
+                    {{ service }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex gap-4 justify-center mt-8">
+              <button
+                type="button"
+                (click)="onCancel()"
+                class="px-6 py-2 rounded border border-blue-400 text-blue-700 bg-white hover:bg-blue-50 transition"
+              >
+                Annuler
+              </button>
+              <button
+                type="submit"
+                [disabled]="!rdvForm.valid"
+                class="px-6 py-2 rounded bg-blue-500 text-white font-medium hover:bg-blue-600 transition disabled:opacity-50"
+              >
+                Créer le rendez-vous
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-  </div>
-</div>
-
-<div
-  *ngIf="showUserModal"
- class="fixed inset-0 z-50 flex items-center justify-center bg-white  bg-opacity-50 w-full mx-auto"
->
-  <div class="bg-white rounded-2xl shadow-lg p-8 w-full max-w-xl relative mx-auto">
-    <button
-      class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-2xl"
-      (click)="closeUserModal()"
-      aria-label="Fermer"
-    >&times;</button>
-    <app-user-details
-      [user]="selectedUser"
-      (close)="closeUserModal()"
-      (userUpdated)="onUserUpdated($event)"
-    ></app-user-details>
   </div>
 </div>

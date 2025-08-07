@@ -30,6 +30,13 @@ export class PatientService {
     }
   }
 
+
+  getPatientById(id: number): Observable<Patient> {
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
+    return this.http.get<Patient>(`${this.apiUrl}/${id}`, { headers });
+  }
+
    // Méthode POST pour créer un utilisateur
 //   createPatient(patient: any): Observable<any> {
 //     const token = this.authService.getToken(); 

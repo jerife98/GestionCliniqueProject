@@ -1,0 +1,154 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-white mt-8">
+  <form 
+   [formGroup]="userForm"
+    (ngSubmit)="saveEdit()"
+    class="bg-[#eee] shadow-lg rounded-3xl p-8 space-y-4 border border-gray-100 w-full max-w-4xl  mx-auto"
+  >
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-3xl font-bold text-gray-700">
+        Détails de l'utilisateur
+      </h2>
+      <!-- Bouton Edit seulement si on n'est pas déjà en édition -->
+      <button 
+        type="button" 
+        *ngIf="!isEditing"
+        (click)="startEdit()" 
+        class="flex text-2xl font-bold items-center space-x-2 text-blue-500 hover:text-blue-700 focus:outline-none"
+      >
+        <i class="fas fa-pencil-alt"></i>
+        <span>Edit</span>
+      </button>
+    </div>
+
+    <hr class="mb-4 border-[#9f9fff] border-2" />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <p *ngIf="!user">Utilisateur non défini</p>
+<p *ngIf="user">ID utilisateur : {{ user.id }}</p>
+
+      <div>
+        <label class="block mb-1">Nom</label>
+        <input
+          formControlName="nom"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Prénom</label>
+        <input
+          formControlName="prenom"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Adresse</label>
+        <input
+          formControlName="adresse"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Genre</label>
+        <select 
+          formControlName="genre"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+        >
+          <option *ngFor="let gender of genre" [value]="gender.value">
+            {{ gender.label }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1">Date de naissance</label>
+        <input
+          formControlName="dateNaissance"
+          type="date"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Téléphone</label>
+        <input
+          formControlName="telephone"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Mot de passe</label>
+        <input
+          formControlName="password"
+          type="password"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          [readonly]="!isEditing"
+        />
+      </div>
+      <div>
+        <label class="block mb-1">Service</label>
+        <select 
+          formControlName="serviceMedicalName"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+        >
+          <option *ngFor="let service of services" [value]="service.value">
+            {{ service.label }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="block mb-1">Statut</label>
+        <div class="flex items-center space-x-2">
+          <input 
+            type="checkbox" 
+            formControlName="actif"
+            class="form-checkbox h-5 w-5 text-[#9f9fff] focus:ring-[#9f9fff]"
+          />
+          <span class="text-gray-700">{{ userForm.get('actif')?.value ? 'Actif' : 'Inactif' }}</span>
+        </div>
+      </div>
+      <div>
+        <label class="block mb-1">Rôle</label>
+        <select 
+          formControlName="role"
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+        >
+          <option value="">Sélectionner un rôle</option>
+          <option *ngFor="let role of roles" [value]="role.value">
+            {{ role.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Boutons Annuler et Modifier affichés uniquement en édition -->
+    <div *ngIf="isEditing" class="flex gap-4 justify-center mt-6">
+      <button 
+        type="button" 
+        class="border border-[#9f9fff] hover:bg-[#9f9fff] hover:text-white transition rounded-3xl px-10 py-2 w-1/3 text-[#9f9fff]"
+        (click)="cancelEdit()"
+      >
+        Annuler
+      </button>
+
+      <button 
+        type="submit" 
+        [disabled]="!userForm.valid"
+        class="px-10 py-2 w-1/3 rounded-3xl bg-[#9f9fff] text-white hover:bg-white hover:text-[#9f9fff] hover:border hover:border-[#9f9fff] transition"
+      >
+        Modifier
+      </button>
+    </div>
+  </form>
+</div>

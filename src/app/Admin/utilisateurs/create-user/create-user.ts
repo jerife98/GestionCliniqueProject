@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { UtilisateursService } from '../../../Services/utilisateur.service';
-import { UserCreatePayload } from '../../../Interfaces/user.interface';
-  
+import { UserCreatePayload } from '../../../Interfaces/user.interface'; 
+
 interface SelectOption {
   value : string;
   label : string;
@@ -19,6 +19,7 @@ interface SelectOption {
 export class CreateUser {
   userForm: FormGroup;
   isVisible = false;
+  isLoading = false;
 
   genre: SelectOption[] = [
     { value: 'F', label: 'Femme' },
@@ -43,7 +44,7 @@ export class CreateUser {
     { value: 'LABORATOIRE_ANALYSES', label: 'Laborantin' },
     { value: 'URGENCES', label: 'Urgentiste' },
     { value: 'KINESITHERAPIE', label: 'Kiné' },
-    { value: 'DENTISTERIE', label: 'Dentiste' },
+    { value: 'DENTISTE', label: 'Dentiste' },
     { value: 'PSYCHIATRIE', label: 'Pasychiatre' },
     { value: 'NEUROLOGIE', label: 'Neurologue' },
     { value: 'GASTRO_ENTEROLOGIE', label: 'Gastro-entérologue' },
@@ -61,12 +62,11 @@ export class CreateUser {
       nom: ['', Validators.required],
       prenom: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      telephone: [''],
-      photoProfil:[''],
       dateNaissance: ['', Validators.required],
+      telephone: [''],
       adresse: [''],
       genre: ['M', Validators.required],
-      password: ['', Validators.required], 
+      password: ['', [Validators.required, Validators.minLength(6)]], // Ajouter minLength
       serviceMedicalName: [''],           
       actif: [true],
       role: ['', Validators.required]
@@ -85,27 +85,59 @@ export class CreateUser {
 
   onSubmit(): void {
     if (this.userForm.valid) {
-      const user = this.userForm.value;
-      const userPayload = {...user, role:{roleType: user.role}};
-
-      // Supprimer le champ serviceMedicalName si l'utilisateur n'est pas médecin
-      if (user.role !== 'MEDECIN') {
-        delete userPayload.serviceMedicalName;
+      const token = localStorage.getItem('auth_token');
+      if (!token) {
+        this.showErrorMessage('Session expirée. Veuillez vous reconnecter.');
+        this.router.navigate(['/login']);
+        return;
       }
+
+      this.isLoading = true;
+      const formValues = this.userForm.value;
+
+      console.log('Données du formulaire:', formValues);
+
+      // Version alternative si le backend attend un objet role
+      const userPayload = {
+  ...formValues,
+  role: formValues.role
+  
+};
+
+      // Ajouter serviceMedicalName seulement si c'est un médecin
+      if (this.userForm.value.role === '2') {
+        userPayload.serviceMedicalName = this.userForm.value.serviceMedicalName;
+      }
+
+      console.log('Payload envoyé:', userPayload);
 
       this.createUser.createUser(userPayload).subscribe({
         next: (result) => {
-          // Affiche un message de succès, reset du formulaire, etc.
-          alert('Utilisateur créé avec succès !');
+          this.isLoading = false;
+          console.log('Utilisateur créé avec succès:', result);
+          this.showSuccessMessage('Utilisateur créé avec succès !');
           this.resetForm();
-          this.router.navigate(['/Utilisateurs']);
+          this.router.navigate(['/utilisateurs']);
         },
         error: (err) => {
-          // Gestion d'erreur
-          console.error('Erreur création utilisateur:', err);
-          alert(`Erreur lors de la création: ${err.error?.message || err.message}`);
+          this.isLoading = false;
+          console.error('Erreur détaillée:', err);
+          console.error('Status:', err.status);
+          console.error('Message:', err.error);
+          
+          if (err.status === 400) {
+            this.showErrorMessage('Format de données incorrect. Vérifiez les informations.');
+          } else if (err.status === 403) {
+            this.showErrorMessage('Accès refusé. Vérifiez vos permissions.');
+          } else {
+            const errorMessage = this.getErrorMessage(err);
+            this.showErrorMessage(errorMessage);
+          }
         }
       });
+    } else {
+      console.log('Formulaire invalide:', this.userForm.errors);
+      this.markFormGroupTouched();
     }
   }
 
@@ -120,5 +152,35 @@ export class CreateUser {
       role: ''
     });
     this.isVisible = false;
+  }
+
+
+
+  private markFormGroupTouched(): void {
+    Object.values(this.userForm.controls).forEach(control => {
+      control.markAsTouched();
+    });
+  }
+
+  private showSuccessMessage(message: string): void {
+    // Implement a notification service here
+    alert(message);
+  }
+
+  private showErrorMessage(message: string): void {
+    // Implement a notification service here
+    alert(message);
+  }
+
+  private getErrorMessage(err: any): string {
+    if (err.status === 409) {
+      return 'Un utilisateur avec cet email existe déjà.';
+    } else if (err.status === 400) {
+      return 'Données invalides. Veuillez vérifier vos informations.';
+    } else if (err.status === 401) {
+      return 'Session expirée. Veuillez vous reconnecter.';
+    } else {
+      return 'Erreur lors de la création. Veuillez réessayer.';
+    }
   }
 }

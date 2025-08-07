@@ -10,13 +10,15 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { RdvService } from '../../Services/rdv.service';
 import { Rdv, RdvCreatePayload, RdvUpdatePayload } from '../../Interfaces/rdv.interface';
+
+
 @Component({
-  selector: 'app-rendez-vous',
+  selector: 'app-rdv',
   imports: [RouterLink, CommonModule, FormsModule],
-  templateUrl: './rendez-vous.html',
-  styleUrl: './rendez-vous.css',
+  templateUrl: './rdv.html',
+  styleUrl: './rdv.css'
 })
-export class RendezVous implements OnInit {
+export class RDV  implements OnInit {
   searchText = signal('');
   pageSize = 10;
   currentPage = 1;
