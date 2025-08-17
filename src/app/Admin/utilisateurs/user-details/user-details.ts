@@ -1,14 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import { UserCreatePayload, User, UserUpdatePayload, ServiceMedicalType } from '../../../Interfaces/user.interface';
+import { User, UserUpdatePayload, ServiceMedicalType } from '../../../Interfaces/user.interface';
 import { UtilisateursService } from '../../../Services/utilisateur.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Role } from '../../../Interfaces/user.interface';
 
-interface SelectOption {
-  value: string;
-  label: string;
-}
 
 @Component({
   selector: 'app-user-details',
@@ -17,32 +12,26 @@ interface SelectOption {
   styleUrls: ['./user-details.css'],
 })
 export class UserDetails implements OnInit, OnChanges {
-  // @Output() close = new EventEmitter<void>();
-  // @Output() userUpdated = new EventEmitter<UserCreatePayload>();
-  // @Input() user: UserUpdatePayload | null = null;
-  @Input() user!: UserUpdatePayload | null;
+  @Input() user: UserUpdatePayload | null = null;
   @Output() close = new EventEmitter<void>();
   @Output() userUpdated = new EventEmitter<User>();
-
-
-
 
   userForm!: FormGroup;
   isEditing = false;
   isLoading = false;
 
-  genre: SelectOption[] = [
+  genre = [
     { value: 'F', label: 'Femme' },
     { value: 'M', label: 'Homme' },
   ];
 
-  roles: SelectOption[] = [
+  roles = [
     { value: 'ADMIN', label: 'Admin' },
     { value: 'MEDECIN', label: 'Médecin' },
     { value: 'SECRETAIRE', label: 'Secrétaire' },
   ];
 
-  services: SelectOption[] = [
+  services = [
     { value: 'MEDECINE_GENERALE', label: 'Médecin généraliste' },
     { value: 'PEDIATRIE', label: 'Pédiatre' },
     { value: 'GYNECOLOGIE', label: 'Gynécologue' },
@@ -66,42 +55,41 @@ export class UserDetails implements OnInit, OnChanges {
 
   ngOnInit() {
     this.initForm();      
-    if (this.user) {
-      this.userForm.patchValue({
-        ...this.user,
-        role: this.user.role // Utiliser directement le type de rôle
-      });
-      this.userForm.disable();
-    }
+    if (this.user) this.fillForm(this.user);
+    
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    
-    if (changes['user'] && this.userForm && this.user) {
-      this.userForm.patchValue({
-        ...this.user,
-        role: this.user.role // Utiliser directement le type de rôle
-      });
-      this.userForm.disable();
-      this.isEditing = false;
-    }
+  if (changes['user'] && this.userForm && this.user) {
+    this.fillForm(this.user);
+    this.userForm.disable();
+    this.isEditing = false;
+  } 
+}
+
+  private initForm() {
+    this.userForm = new FormGroup({
+      nom: new FormControl({ value: '', disabled: true }, Validators.required),
+      prenom: new FormControl({ value: '', disabled: true }, Validators.required),
+      adresse: new FormControl({ value: '', disabled: true }),
+      email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
+      genre: new FormControl({ value: '', disabled: true }, Validators.required),
+      dateNaissance: new FormControl({ value: '', disabled: true }, Validators.required),
+      telephone: new FormControl({ value: '', disabled: true }, Validators.required),
+      password: new FormControl({ value: '', disabled: true }, [Validators.minLength(6)]),
+      serviceMedicalName: new FormControl({ value: '', disabled: true }),
+      actif: new FormControl({ value: false, disabled: true }),
+      role: new FormControl({ value: '', disabled: true }, Validators.required),
+    });
   }
 
-  initForm() {
-this.userForm = new FormGroup({
-  nom: new FormControl({ value: '', disabled: true }, Validators.required),
-  prenom: new FormControl({ value: '', disabled: true }, Validators.required),
-  adresse: new FormControl({ value: '', disabled: true }),
-  email: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.email]),
-  genre: new FormControl({ value: '', disabled: true }, Validators.required),
-  dateNaissance: new FormControl({ value: '', disabled: true }, Validators.required),
-  telephone: new FormControl({ value: '', disabled: true }, Validators.required),
-  password: new FormControl({ value: '', disabled: true }, [Validators.required, Validators.minLength(6)]),
-  serviceMedicalName: new FormControl({ value: '', disabled: true }),
-  actif: new FormControl({ value: false, disabled: true }),
-  role: new FormControl({ value: '', disabled: true }, Validators.required),
-});
-
+  private fillForm(user: UserUpdatePayload) {
+    this.userForm.patchValue({
+      ...user,
+      role: typeof user.role === 'string' ? user.role : user.role,
+    });
+    this.userForm.disable();
+    this.isEditing = false;
   }
 
  startEdit() {
@@ -111,123 +99,49 @@ this.userForm = new FormGroup({
 
 
 cancelEdit() {
-  this.isEditing = false;
-  this.userForm.disable();
-  if (this.user) {
-    // S'assurer que le roleType est toujours un string lors de l'annulation
-  
-    // Réinitialiser le formulaire avec les valeurs de l'utilisateur
-    this.userForm.patchValue({
-      ...this.user,
-      role: this.user.role
-    });
-  }
+  if (this.user) this.fillForm(this.user);
 }
 
-// saveEdit() {
-//   if (!this.userForm.valid || !this.user) return;
-
-//   this.isLoading = true;
-
-//   const formValues = this.userForm.value;
-
-//     // Conversion propre du rôle
-//   const roleValue = typeof formValues.role === 'string' 
-//     ? formValues.role 
-//     : formValues.role.roleType;
-
-//     if (!this.user?.id || this.user.id <= 0) {
-//   console.error('ID utilisateur invalide ou manquant');
-//   // Soit retourner une erreur, soit rediriger vers la création
-//   return;
-// }
-//   const userToUpdate: UserUpdatePayload = {
-//     id: this.user.id,
-//     ...formValues,
-//     role: roleValue // Maintenant c'est toujours un string
-//   };
-
-//   this.utilisateurService.updateUser(userToUpdate).subscribe({
-//     next: (updated: User) => {
-//       this.isLoading = false;
-//       this.userUpdated.emit({
-//         ...updated,
-//         role: typeof updated.role === 'string' ? updated.role : updated.role.roleType,
-//       });
-//       this.isEditing = false;
-//       this.userForm.disable();
-//     },
-//     error: (err) => {
-//       this.isLoading = false;
-//       console.error('Erreur mise à jour:', err);
-//     },
-//   });
-// }
-
 saveEdit() {
-  if (!this.userForm.valid || !this.user) {
+  if (!this.userForm.valid || !this.user?.id) {
     console.error('Formulaire invalide ou utilisateur non défini');
     return;
   }
 
-  // if (!this.user.id || this.user.id <= 0) {
-  //   console.error('ID utilisateur invalide:', this.user.id);
-  //   return;
-  // }
-
   this.isLoading = true;
-  const formValues = this.userForm.value;
-  
+  const formValues = this.userForm.getRawValue();
 
   const userToUpdate: UserUpdatePayload = {
     id: this.user.id,
-    nom: formValues.nom,
-    prenom: formValues.prenom,
-    email: formValues.email,
-    genre: formValues.genre,
-    dateNaissance: formValues.dateNaissance,
-    telephone: formValues.telephone,
-    adresse: formValues.adresse,
-    password: formValues.password,
+    nom: formValues.nom || '',
+    prenom: formValues.prenom || '',
+    email: formValues.email || '',
+    genre: formValues.genre as 'F' | 'M',
+    dateNaissance: formValues.dateNaissance || '',
+    telephone: formValues.telephone || '',
+    adresse: formValues.adresse || '',
     serviceMedicalName: formValues.serviceMedicalName as ServiceMedicalType,
-    actif: formValues.actif,
-    role: formValues.role // Envoyer le type de rôle directement
-    
+    actif: formValues.actif ?? true,
+    role: typeof formValues.role === 'object' ? formValues.role.roleType : formValues.role,
+    password: formValues.password?.trim()|| '',
   };
 
-  // const userToUpdate: UserUpdatePayload = {
-  //   id: this.user.id,
-  //   nom: formValues.nom,
-  //   prenom: formValues.prenom,
-  //   email: formValues.email,
-  //   genre: formValues.genre,
-  //   dateNaissance: formValues.dateNaissance,
-  //   actif: formValues.actif,
-  //    role: typeof formValues.role === 'string' 
-  //         ? formValues.role 
-  //         : (formValues.role as Role)?.roleType ?? '', // <-- rôle sous forme de string ici ✅
+  if(formValues.password) delete (userToUpdate as any).password; // Ne pas envoyer le mot de passe si vide
 
-  //   ...(formValues.adresse && { adresse: formValues.adresse }),
-  //   ...(formValues.telephone && { telephone: formValues.telephone }),
-  //   ...(formValues.serviceMedicalName && { serviceMedicalName: formValues.serviceMedicalName }),
-  //   ...(formValues.password && { password: formValues.password }),
-  // };
   console.log('Payload final envoyé au backend :', userToUpdate);
 
   this.utilisateurService.updateUser(userToUpdate).subscribe({
-    next: (updated: User) => {
-      this.isLoading = false;
-      this.userUpdated.emit(updated); // on renvoie un User complet
+    next: (updated) => {
+      console.log('Utilisateur mis à jour avec succès', updated);
+      
       this.isEditing = false;
       this.userForm.disable();
+      this.userUpdated.emit(updated); // on renvoie un User complet
     },
     error: (err) => {
-      this.isLoading = false;
       console.error('Erreur mise à jour:', err);
     },
   });
 }
-
-
 
 }

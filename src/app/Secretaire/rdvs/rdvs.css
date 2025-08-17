@@ -1,0 +1,9 @@
+@layer utilities {
+  .noise {
+    background-image: 
+      radial-gradient(#000 25%, transparent 10%);
+    background-size: 0.5rem 0.5rem; /* size */
+    opacity: 0.6; /* density 60% */
+    mix-blend-mode: multiply; /* effet monotone sur la couleur */
+  }
+}

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { PatientService } from '../../../Services/patient.service';
 import { CommonModule } from '@angular/common';
 import { Patient, PatientCreatePayload } from '../../../Interfaces/patient.interface';
-import { AuthService } from '../../../Services/auth.service';
 import { CurrentUser } from '../../../current-user/current-user';
 
 interface SelectOption {
@@ -13,12 +12,12 @@ interface SelectOption {
 }
 
 @Component({
-  selector: 'app-create-patient',
+  selector: 'app-create-malade',
   imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser],
-  templateUrl: './create-patient.html',
-  styleUrl: './create-patient.css'
+  templateUrl: './create-malade.html',
+  styleUrl: './create-malade.css'
 })
-export class CreatePatient {
+export class CreateMalade {
   patientForm: FormGroup;
   isVisible = false;
 
@@ -61,6 +60,7 @@ export class CreatePatient {
       })
     });
   }
+
   onSubmit(): void {
     if (this.patientForm.valid) {
       const formValue = this.patientForm.value;

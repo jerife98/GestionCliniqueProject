@@ -4,6 +4,8 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Patient } from '../../Interfaces/patient.interface';
 import { PatientService } from '../../Services/patient.service';
+import { AuthService } from '../../Services/auth.service';
+import { CurrentUser } from '../../current-user/current-user';
 
 interface SelectOption {
   value : string;
@@ -12,7 +14,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-patients',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
   templateUrl: './patients.html',
   styleUrl: './patients.css'
 })
@@ -25,9 +27,10 @@ export class Patients implements OnInit{
 
   selectedUser: Patient | null = null;
 
-  constructor(private patientService: PatientService ){}
+  constructor(private patientService: PatientService, 
+   ){}
 
-    ngOnInit() {
+    ngOnInit() {  
       this.patientService.getPatients().subscribe({
         next: users => {
           //  console.log(users);

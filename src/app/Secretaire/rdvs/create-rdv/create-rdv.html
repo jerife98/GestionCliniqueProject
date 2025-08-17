@@ -8,68 +8,35 @@
       <nav class="flex-1 px-3 py-4 bg-[#feffef]">
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/dashboard']"
+          [routerLink]="['/rendez-vous']"
           routerLinkActive="active"
         >
-          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Dashboard
+          <i class="fa fa-clock-o h-6 w-6 mr-2" style="font-size: 25px"></i>
+          Rendez-vous
         </a>
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/utilisateurs']"
+          [routerLink]="['/Malade']"
           routerLinkActive="active"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"
-            />
-          </svg>
-          Utilisateurs
-        </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/patients']"
-          routerLinkActive="active"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
-            />
-          </svg>
+          <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
           Patients
         </a>
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/calendar']"
+          routerLinkActive="active"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"
-            />
-          </svg>
-          Messagerie
+          <i class="far fa-calendar-alt"></i>
+          Calendrier
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/facture']"
+          routerLinkActive="active"
+        >
+          <i class="far fa-file-alt h-6 w-6 mr-2" style="font-size: 25px"></i>
+          Facture
         </a>
       </nav>
     </div>
@@ -78,7 +45,9 @@
   <div class="flex flex-col flex-1">
     <div class="flex justify-between items-center my-6">
       <div>
-        <h1 class="text-3xl font-bold text-gray-800">Gestion des patients</h1>
+        <h1 class="text-3xl font-bold text-gray-800">
+          Gestion des Rendez-vous
+        </h1>
         <nav class="flex mt-3" aria-label="Breadcrumb">
           <ol
             class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
@@ -87,10 +56,10 @@
               <div class="flex items-center">
                 <a
                   class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-                  [routerLink]="['/patients']"
+                  [routerLink]="['/rdv']"
                   routerLinkActive="active"
                 >
-                  Liste des Patients</a
+                  Liste des Rendez-vous</a
                 >
               </div>
             </li>
@@ -113,9 +82,9 @@
                 </svg>
                 <a
                   class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
-                  [routerLink]="['/create-user']"
+                  [routerLink]="['/creates-rdv']"
                   routerLinkActive="active"
-                  >Création de patient</a
+                  >Création des rendez-vous</a
                 >
               </div>
             </li>
@@ -129,14 +98,7 @@
           ></span>
           <i class="far fa-bell text-3xl"></i>
         </button>
-        <div class="flex items-center space-x-2">
-          <img
-            src="doc1.png"
-            class="w-10 h-10 rounded-full object-cover border-2 border-gray-300"
-            alt="avatar"
-          />
-          <span class="font-semibold text-gray-700">Dr. Atangana A. T.</span>
-        </div>
+        <app-current-user></app-current-user>
       </div>
     </div>
 
@@ -150,8 +112,13 @@
           (ngSubmit)="onSubmit()"
           class="w-3/4 bg-[#eee] shadow-lg rounded-xl p-8 border border-gray-100"
         >
+          <app-infos-patient
+            *ngIf="InfosFormGroup"
+            [formGroup]="InfosFormGroup"
+            [isVisible]="false"
+          ></app-infos-patient>
           <!-- Titre principal -->
-          <h2 class="text-2xl font-bold mb-6 text-gray-800">
+          <h2 class="text-2xl font-bold my-6 text-gray-800">
             Créer un rendez-vous
           </h2>
           <hr class="mb-4 border-[#9f9fff] border-2" />
@@ -162,28 +129,17 @@
               Informations générales
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label class="block text-gray-700 mb-1">Patient</label>
-                <select
-                  formControlName="patientId"
-                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                >
-                  <option *ngFor="let patient of patients" [value]="patient.id">
-                    {{ patient.nom }} {{ patient.prenom }}
-                  </option>
-                </select>
-              </div>
-              <div>
+              <!-- <div>
                 <label class="block text-gray-700 mb-1">Médecin</label>
                 <select
                   formControlName="medecinId"
                   class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
-                  <option *ngFor="let medecin of medecins" [value]="medecin.id">
-                    {{ medecin.nom }} {{ medecin.prenom }}
+                  <option *ngFor="let doc of medecins" [value]="doc.id">
+                    {{ doc.nom }} {{ doc.prenom }}
                   </option>
                 </select>
-              </div>
+              </div> -->
               <div>
                 <label class="block text-gray-700 mb-1">Jour</label>
                 <input
@@ -217,28 +173,55 @@
                   required
                   class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
+                  <option value="">Sélectionnez un service</option>
                   <option *ngFor="let service of services" [value]="service">
                     {{ service }}
                   </option>
                 </select>
               </div>
-            </div>
+              <!-- Sélection du médecin (se charge après le service) -->
+              <div *ngIf="filteredMedecins.length > 0">
+                <label class="block text-gray-700 mb-1" for="médecin">Médecin</label>
+                <select
+                  formControlName="medecinId"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  required
+                  [disabled]="filteredMedecins.length === 0"
+                >
+                  <option value="">Sélectionnez un médecin</option>
+                  <option
+                    *ngFor="let medecin of filteredMedecins"
+                    [value]="medecin.id"
+                  >
+                    {{ medecin.nom }} {{ medecin.prenom }}
+                  </option>
+                </select>
+              </div>
 
-            <div class="flex gap-4 justify-center mt-8">
-              <button
-                type="button"
-                (click)="onCancel()"
-                class="px-6 py-2 rounded border border-blue-400 text-blue-700 bg-white hover:bg-blue-50 transition"
+              <!-- Message conditionnel -->
+              <div
+                *ngIf="filteredMedecins.length === 0 && !isLoading"
+                class="mt-2 text-red-500"
               >
-                Annuler
-              </button>
-              <button
-                type="submit"
-                [disabled]="!rdvForm.valid"
-                class="px-6 py-2 rounded bg-blue-500 text-white font-medium hover:bg-blue-600 transition disabled:opacity-50"
-              >
-                Créer le rendez-vous
-              </button>
+                Aucun médecin disponible pour le service "{{
+                rdvForm.get('serviceMedical')?.value }}"
+              </div>
+              <div class="flex gap-4 justify-center mt-8">
+                <button
+                  type="button"
+                  (click)="onCancel()"
+                  class="px-6 py-2 rounded border border-blue-400 text-blue-700 bg-white hover:bg-blue-50 transition"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="submit"
+                  [disabled]="!rdvForm.valid"
+                  class="px-6 py-2 rounded bg-blue-500 text-white font-medium hover:bg-blue-600 transition disabled:opacity-50"
+                >
+                  Créer le rendez-vous
+                </button>
+              </div>
             </div>
           </div>
         </form>

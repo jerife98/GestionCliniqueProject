@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Role, User, UserCreatePayload, UserUpdatePayload } from '../Interfaces/user.interface';
 import { AuthService } from './auth.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -50,7 +50,24 @@ export class UtilisateursService {
    
   }
 
+    // Nouvelle méthode pour secrétaires
+  getMedecinsForSecretaire(): Observable<User[]> {
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
+    return this.http.get<User[]>(`${this.apiUrl}/utilisateurs/search`, {
+      params: { searchTerm: 'MEDECIN' },
+      headers
+    });
+  }
 
+    getMedecinsByService(service: string): Observable<User[]> {
+    const token = this.authService.getToken();
+    const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
+    // L'URL correspond bien à ce que tu as donné
+      return this.http.get<User[]>(`${this.apiUrl}/by-service/${service}`, { headers });
+  }
+
+  // Méthode GET pour trouver un utilisateur par ID
   findUtilisateurById(id: number): Observable<User> {
     const token = this.authService.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
@@ -65,41 +82,7 @@ export class UtilisateursService {
     return this.http.get<User[]>(`${this.apiUrl}/by-service/${serviceMedical}`, { headers });
   }
 
-  //   // Méthode PUT pour mettre à jour un utilisateur
-  // updateUser(user: User): Observable<User> {
-  //   const token = this.authService.getToken();
-  //   if (!token) {
-  //     return throwError(() => new Error('No authentication token found.'));
-  //   }
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json',
-  //     Authorization: `Bearer ${token}`,
-  //   });
-  //   // On suppose que le backend attend un PUT sur /utilisateurs/{id}
-  //   return this.http.put<User>(`${this.apiUrl}/${user.id}`, user, { headers });
-  // }
-
-// updateUser(user: UserUpdatePayload): Observable<User> {
-//   const token = this.authService.getToken();
-//   if (!token) {
-//     return throwError(() => new Error('No authentication token found.'));
-//   }
-//   //préparation du payload pour le backend
-//   const payload = { ...user, role: user.role }; // Assurez-vous que le rôle est au format attendu par le backend
-
-//   const headers = new HttpHeaders({
-//     'Content-Type': 'application/json',
-//     Authorization: `Bearer ${token}`,
-//   });
-//   return this.http.put<User>(`${this.apiUrl}/${user.id}`, user, { headers }).pipe(
-//     tap(response => console.log('Réponse updateUser:', response)),
-//     catchError(error => {
-//       console.error('Erreur updateUser:', error);
-//       return throwError(() => error);
-//     })
-//   );
-// }
-
+  // Méthode UPDATE pour mettre à jour un utilisateur
 
   updateUser(user: UserUpdatePayload): Observable<User> {
     const token = this.authService.getToken();

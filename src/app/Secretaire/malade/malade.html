@@ -11,44 +11,35 @@
           [routerLink]="['/rendez-vous']"
           routerLinkActive="active"
         >
-          <i class="fa fa-clock-o h-6 w-6 mr-2" style="font-size: 25px"></i>
-          Rendez-vous
+          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Rendez-vous
         </a>
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/consultations']"
+          [routerLink]="['/Malade']"
           routerLinkActive="active"
         >
           <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
-          Consultations
+          Patients
         </a>
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/messagerie']"
+          [routerLink]="['/calendar']"
           routerLinkActive="active"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
-            />
-          </svg>
-          Messagerie
-        </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/calendrier']"
-          routerLinkActive="active"
-        >
-          <i class="fa fa-calendar h-6 w-6 mr-2" style="font-size: 25px"></i>
+          <i
+            class="far fa-calendar-alt h-6 w-6 mr-2"
+            style="font-size: 25px"
+          ></i>
           Calendrier
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/facture']"
+          routerLinkActive="active"
+        >
+          <i class="far fa-file-alt h-6 w-6 mr-2" style="font-size: 25px"></i>
+
+          Facture
         </a>
       </nav>
     </div>
@@ -66,7 +57,7 @@
               <div class="flex items-center">
                 <a
                   class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-                  [routerLink]="['/patients']"
+                  [routerLink]="['/Malade']"
                   routerLinkActive="active"
                 >
                   Liste des Patients</a
@@ -92,7 +83,7 @@
                 </svg>
                 <a
                   class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
-                  [routerLink]="['/create-patient']"
+                  [routerLink]="['/Create-malade']"
                   routerLinkActive="active"
                   >Création des patients</a
                 >
@@ -108,14 +99,7 @@
           ></span>
           <i class="far fa-bell text-3xl"></i>
         </button>
-        <div class="flex items-center space-x-2">
-          <img
-            src="doc1.png"
-            class="w-10 h-10 rounded-full object-cover border-2 border-gray-300"
-            alt="avatar"
-          />
-          <span class="font-semibold text-gray-700">Dr. Atangana A. T.</span>
-        </div>
+        <app-current-user></app-current-user>
       </div>
     </div>
 
@@ -130,10 +114,10 @@
       <button
         type="button"
         class="bg-[#9f9fff] rounded-3xl p-3 w-1/5 text-white"
-        [routerLink]="['/create-rdv']"
+        [routerLink]="['/Create-malade']"
         routerLinkActive="active"
       >
-        Ajouter un rendez-vous
+        Ajouter un patient
       </button>
     </div>
 
@@ -184,24 +168,25 @@
           <table class="min-w-full divide-y divide-white text-sm">
             <thead class="bg-[#9f9fff] text-white">
               <tr>
-                <th class="px-4 py-2">Date</th>
-                <th class="px-4 py-2">Heure</th>
-                <th class="px-4 py-2">Salle</th>
+                <th class="px-4 py-2">Nom</th>
+                <th class="px-4 py-2">Prenom</th>
+                <th class="px-4 py-2">Téléphone</th>
                 <th class="px-4 py-2">Adresse</th>
-                <th class="px-4 py-2">Nom et prenom</th>
-                <th class="px-4 py-2">Statut</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Action</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-50">
               <tr
-                *ngFor="let rendezVous of paginatedRendezVous()"
+                *ngFor="let patient of paginatedUsers()"
+                [class.bg-blue-100]="selectedUser?.email === patient.email"
                 style="cursor: pointer"
               >
-                <td class="px-4 py-2">{{ rendezVous.jour }}</td>
-                <td class="px-4 py-2">{{ rendezVous.heure }}</td>
-                <td class="px-4 py-2">{{ rendezVous.serviceMedical }}</td>
-                <td class="px-4 py-2">{{ rendezVous.nomSalle }}</td>
-                <td class="px-4 py-2">{{ rendezVous.patientNomComplet }}</td>
+                <td class="px-4 py-2">{{ patient.nom }}</td>
+                <td class="px-4 py-2">{{ patient.prenom }}</td>
+                <td class="px-4 py-2">{{ patient.telephone }}</td>
+                <td class="px-4 py-2">{{ patient.adresse }}</td>
+                <td class="px-4 py-2">{{ patient.email }}</td>
                 <td class="px-4 py-2 flex space-x-2">
                   <button
                     class="text-blue-600 hover:text-blue-800"

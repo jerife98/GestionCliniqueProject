@@ -10,9 +10,10 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { RdvService } from '../../Services/rdv.service';
 import { Rdv, RdvCreatePayload, RdvUpdatePayload } from '../../Interfaces/rdv.interface';
+import { CurrentUser } from '../../current-user/current-user';
 @Component({
   selector: 'app-rendez-vous',
-  imports: [RouterLink, CommonModule, FormsModule],
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
   templateUrl: './rendez-vous.html',
   styleUrl: './rendez-vous.css',
 })
@@ -21,8 +22,9 @@ export class RendezVous implements OnInit {
   pageSize = 10;
   currentPage = 1;
   rendezVous = signal<Rdv[]>([]);
+  rdvList : Rdv[] = []; 
 
-  selectedUser: Rdv | null = null;
+  selectedRdv: Rdv | null = null;
 
   constructor(private rdvService: RdvService) {}
 
@@ -55,7 +57,7 @@ export class RendezVous implements OnInit {
   });
 
   totalPages = computed(() => {
-    return Math.ceil(this.filteredRendezVous().length / this.pageSize) || 0;
+    return this.filteredRendezVous ? Math.ceil(this.filteredRendezVous().length / this.pageSize) : 0;
   });
 
   paginatedRendezVous = computed(() => {
@@ -69,8 +71,8 @@ export class RendezVous implements OnInit {
   }
   // Pour sauvegarder les changements (ajoutez votre propre logique)
   saveRendezVous() {
-    if (this.selectedUser) {
-      console.log('Rendez-vous modifié :', this.selectedUser);
+    if (this.selectedRdv) {
+      console.log('Rendez-vous modifié :', this.selectedRdv);
     }
   }
 }

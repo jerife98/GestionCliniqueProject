@@ -1,0 +1,97 @@
+<div class="flex h-screen bg-white">
+  <!-- sidebar -->
+  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+      <img src="logo_clinic.png" alt="logo de la clinique" />
+    </div>
+    <div class="flex flex-col h-screen">
+      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/rendez-vous']"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Rendez-vous
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/Malade']"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
+          Patients
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/calendar']"
+          routerLinkActive="active"
+        >
+          <i
+            class="far fa-calendar-alt h-6 w-6 mr-2"
+            style="font-size: 25px"
+          ></i>
+          Calendrier
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/facture']"
+          routerLinkActive="active"
+        >
+          <i class="far fa-file-alt h-6 w-6 mr-2" style="font-size: 25px"></i>
+
+          Facture
+        </a>
+      </nav>
+    </div>
+  </div>
+  <!-- Main content -->
+  <div class="flex flex-col flex-1">
+    <div class="flex justify-between items-center my-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Calendrier</h1>
+        <nav class="flex mt-3" aria-label="Breadcrumb">
+          <ol
+            class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+          >
+            <li>
+              <div class="flex items-center">
+                <a
+                  class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+                  [routerLink]="['/calendar']"
+                  routerLinkActive="active"
+                >
+                  Liste des Evènements</a
+                >
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="relative">
+          <span
+            class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Asec)]"
+          ></span>
+          <i class="far fa-bell text-3xl"></i>
+        </button>
+        <app-current-user></app-current-user>
+      </div>
+    </div>
+
+  <!-- Statistiques globales -->
+  <div class="bg-[var(--Aprim)] rounded-3xl shadow p-6 mb-6 mx-3">
+    <div class="flex justify-between items-center">
+      <div>
+        <h2 class="text-3xl font-bold text-gray-700 mb-5">Evènements</h2>
+      </div>
+    </div>
+    <hr class="mb-4 border-[#9f9fff] border-2" />
+    <!-- Pagination -->
+
+    <!-- formulaire de recherche des utilisateurs -->
+    <div class="p-6 space-y-4">
+      <!-- Tableau des utilisateurs -->
+       <full-calendar [options]="calendarOptions"></full-calendar>
+    </div>
+  </div>
+</div>

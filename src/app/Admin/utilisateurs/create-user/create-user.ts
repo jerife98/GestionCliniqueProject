@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { UtilisateursService } from '../../../Services/utilisateur.service';
 import { UserCreatePayload } from '../../../Interfaces/user.interface'; 
+import { CurrentUser } from '../../../current-user/current-user';
 
 interface SelectOption {
   value : string;
@@ -12,7 +13,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-create-user',
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, CurrentUser],
   templateUrl: './create-user.html',
   styleUrl: './create-user.css'
 })

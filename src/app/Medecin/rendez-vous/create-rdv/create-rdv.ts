@@ -9,6 +9,7 @@ import { Rdv, RdvCreatePayload } from '../../../Interfaces/rdv.interface';
 import { Patient } from '../../../Interfaces/patient.interface';
 import { User } from '../../../Interfaces/user.interface';
 import { ServiceMedical } from '../../../Enums/service-medical.enum';
+import { CurrentUser } from '../../../current-user/current-user';
 
 interface SelectOption {
   value : string;
@@ -17,7 +18,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-create-rdv',
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser],
   templateUrl: './create-rdv.html',
   styleUrl: './create-rdv.css'
 })

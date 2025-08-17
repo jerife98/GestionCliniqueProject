@@ -23,42 +23,6 @@ export class LoginPage {
     private http: HttpClient,
   ) {}
 
-  // onSubmit() {
-  //   const credentials = {
-  //     email: this.email,
-  //     password: this.password
-  //   };
-
-  //   this.authService.login(credentials)
-    
-  //     .subscribe({
-  //       next: (user: User) => {
-  //         this.http.get('http://localhost:8081/Api/V1/clinique/utilisateurs').subscribe(console.log);
-
-  //       switch (user.role.roleType.toLowerCase()) {
-  //         case 'admin':
-  //           this.router.navigate(['dashboard']);
-  //           break;
-  //         case 'medecin':
-  //           this.router.navigate(['medecin']);
-  //           break;
-  //         case 'secretaire':
-  //           this.router.navigate(['secretaire']);
-  //           break;
-  //         default:
-  //           // Rôle inconnu ou non géré, on redirige vers page d'accueil ou erreur
-  //           this.router.navigate(['/']);
-  //           break;
-  //       }
-  //         console.log('Connexion réussie', this.email, this.password);
-
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur de connexion', err);
-  //         alert('Identifiants incorrects');
-  //       }
-  //     });
-  // }
   onSubmit() {
   const credentials = {
     email: this.email,
@@ -71,6 +35,8 @@ export class LoginPage {
         // Stockage du token
         localStorage.setItem('auth_token', response.token);
 
+          // On stocke aussi l'utilisateur complet (y compris rôle)
+        localStorage.setItem('user', JSON.stringify(response)); 
         // Extraction du rôle principal
         let roleType = '';
         if (response.authorities && response.authorities.length > 0) {

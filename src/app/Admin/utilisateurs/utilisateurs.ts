@@ -2,7 +2,6 @@ import { Component, OnInit, signal, computed } from '@angular/core';
 import { UtilisateursService } from '../../Services/utilisateur.service';
 import {
   User,
-  UserCreatePayload,
   UserUpdatePayload,
 } from '../../Interfaces/user.interface';
 import { RouterLink } from '@angular/router';
@@ -10,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { log } from 'console';
 import { UserDetails } from './user-details/user-details';
+import { CurrentUser } from '../../current-user/current-user';
 
 @Component({
   selector: 'app-utilisateurs',
-  imports: [RouterLink, CommonModule, FormsModule, UserDetails],
+  imports: [RouterLink, CommonModule, FormsModule, UserDetails, CurrentUser],
   templateUrl: './utilisateurs.html',
   styleUrl: './utilisateurs.css',
 })
@@ -80,6 +80,7 @@ export class Utilisateurs implements OnInit {
           ...fullUser,
           role: fullUser.role.roleType
         };
+        this.showUserModal = true; // Ouvrir la modale avec les détails complets
       },
       error: (err) => {
         console.error(
@@ -91,6 +92,7 @@ export class Utilisateurs implements OnInit {
           ...user,
           role: user.role.roleType  // Stocker le type de rôle
         };
+        this.showUserModal = true; // Ouvrir la modale même si les détails sont incomplets
       },
     });
   }
@@ -119,33 +121,13 @@ export class Utilisateurs implements OnInit {
     this.closeUserModal();
   }
 
-  // Pour sauvegarder les changements (ajoutez votre propre logique)
-  // saveUser() {
-  //   if (this.selectedUser) {
-  //     // Récupère l'id de l'utilisateur sélectionné (par exemple, stocké dans une variable temporaire)
-  //     const userId = this.utilisateurs().find(u => u.email === this.selectedUser!.email)?.id;
-  //     if (!userId) {
-  //       alert('ID utilisateur introuvable.');
-  //       return;
-  //     }
-  //     this.utilisateurService.updateUser(userId, this.selectedUser).subscribe({
-  //       next: (updated) => {
-  //         // Mets à jour la liste locale
-  //         const users = this.utilisateurs();
-  //         const idx = users.findIndex(u => u.id === userId);
-  //         if (idx !== -1) {
-  //           users[idx] = { ...users[idx], ...this.selectedUser, role: { roleType: this.selectedUser.role } };
-  //           this.utilisateurs.set([...users]);
-  //         }
-  //         this.closeUserModal();
-  //       },
-  //       error: (err) => {
-  //         console.error('Erreur lors de la mise à jour :', err);
-  //         alert('Erreur lors de la mise à jour.');
-  //       }
-  //     });
-  //   }
-  // }
+  onEditUser(user: any) {
+  if (!user || !user.id) {
+    console.error("Aucun ID utilisateur pour la modification");
+    return;
+  }
+  this.selectUser(user);
+  }
 
   getRoleName(roleId: number): string {
   switch(roleId) {

@@ -1,0 +1,85 @@
+<div [formGroup]="formGroup">
+  <!-- Titre principal -->
+  <h2 class="text-2xl font-bold mb-6 text-gray-800">Informations du patient</h2>
+  <hr class="mb-4 border-[#9f9fff] border-2" />
+
+  <!-- Informations générales -->
+  <div>
+    <select formControlName="patientId">
+      <option [ngValue]="null">Sélectionner un patient</option>
+      <option *ngFor="let p of patients" [ngValue]="p.id">
+        {{ p.nom }} {{ p.prenom }}
+      </option>
+    </select>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-gray-700 mb-1">Nom</label>
+        <input
+          formControlName="nom"
+          type="text"
+          placeholder="Nom"
+          class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Prénom</label>
+        <input
+          formControlName="prenom"
+          type="text"
+          placeholder="Prénom"
+          class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Adresse</label>
+        <input
+          formControlName="adresse"
+          type="text"
+          placeholder="Adresse"
+          class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Email</label>
+        <input
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Genre</label>
+        <select
+          class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+          formControlName="genre"
+          required
+        >
+          <option *ngFor="let gender of genre" [value]="gender.value">
+            {{ gender.label }}
+          </option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-gray-700 mb-1">Date de naissance</label>
+        <input
+          formControlName="dateNaissance"
+          type="date"
+          class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-gray-700 mb-1">Telephone</label>
+          <input
+            formControlName="telephone"
+            type="text"
+            placeholder="telephone"
+            class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

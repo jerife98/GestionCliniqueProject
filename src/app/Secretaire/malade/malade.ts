@@ -6,13 +6,18 @@ import { Patient } from '../../Interfaces/patient.interface';
 import { PatientService } from '../../Services/patient.service';
 import { CurrentUser } from '../../current-user/current-user';
 
+interface SelectOption {
+  value : string;
+  label : string;
+}
+
 @Component({
-  selector: 'app-calendrier',
+  selector: 'app-malade',
   imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
-  templateUrl: './calendrier.html',
-  styleUrl: './calendrier.css'
+  templateUrl: './malade.html',
+  styleUrl: './malade.css'
 })
-export class Calendrier implements OnInit{
+export class Malade implements OnInit{
   searchText = signal('');
   pageSize = 10;
   currentPage = 1;

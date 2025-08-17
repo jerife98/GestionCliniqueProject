@@ -1,0 +1,5 @@
+export enum StatutSalle {
+  DISPONIBLE = "DISPONIBLE",
+  OCCUPEE = "OCCUPEE",
+  EN_MAINTENANCE = "EN_MAINTENANCE"
+}

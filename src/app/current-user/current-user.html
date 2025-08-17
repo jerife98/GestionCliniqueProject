@@ -1,0 +1,11 @@
+        <div class="flex items-center space-x-2">
+          <img *ngIf="connectedUser?.photoUrl; else defaultAvatar" [src]="connectedUser.photoUrl" alt="photo de {{ connectedUser.username }}" class="w-10 h-10 rounded-full object-cover border-2 border-gray-300" alt="avatar" />
+          <ng-template #defaultAvatar>
+            <img
+              src="doc1.png"
+              alt="Avatar par défaut"
+              class="w-10 h-10 rounded-full border-2 border-gray-300"
+            />
+          </ng-template>
+          <span class="font-semibold text-gray-700">{{connectedUser?.username}}</span>
+        </div>

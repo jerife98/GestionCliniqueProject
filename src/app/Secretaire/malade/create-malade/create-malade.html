@@ -1,0 +1,317 @@
+<div class="flex h-screen bg-white">
+  <!-- sidebar -->
+  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+      <img src="logo_clinic.png" alt="logo de la clinique" />
+    </div>
+    <div class="flex flex-col h-screen">
+      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/rendez-vous']"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Rendez-vous
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/Malade']"
+          routerLinkActive="active"
+        >
+          <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
+          Patients
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/calendar']"
+          routerLinkActive="active"
+        >
+          <i
+            class="far fa-calendar-alt h-6 w-6 mr-2"
+            style="font-size: 25px"
+          ></i>
+          Calendrier
+        </a>
+        <a
+          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
+          [routerLink]="['/facture']"
+          routerLinkActive="active"
+        >
+          <i class="far fa-file-alt h-6 w-6 mr-2" style="font-size: 25px"></i>
+
+          Facture
+        </a>
+      </nav>
+    </div>
+  </div>
+  <!-- Main content -->
+  <div class="flex flex-col flex-1">
+    <div class="flex justify-between items-center my-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">Gestion des patients</h1>
+        <nav class="flex mt-3" aria-label="Breadcrumb">
+          <ol
+            class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+          >
+            <li>
+              <div class="flex items-center">
+                <a
+                  class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+                  [routerLink]="['/Malade']"
+                  routerLinkActive="active"
+                >
+                  Liste des Patients</a
+                >
+              </div>
+            </li>
+            <li aria-current="page">
+              <div class="flex items-center">
+                <svg
+                  class="rtl:rotate-180 w-3 h-3 text-gray-700 mx-1 hover:text-blue-600"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 9 4-4-4-4"
+                  />
+                </svg>
+                <a
+                  class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
+                  [routerLink]="['/Create-malade']"
+                  routerLinkActive="active"
+                  >Création de patient</a
+                >
+              </div>
+            </li>
+          </ol>
+        </nav>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="relative">
+          <span
+            class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Asec)]"
+          ></span>
+          <i class="far fa-bell text-3xl"></i>
+        </button>
+        <app-current-user></app-current-user>
+      </div>
+    </div>
+
+    <!-- formulaire de recherche des utilisateurs -->
+    <div class="p-6 space-y-4">
+      <div
+        class="flex flex-col items-center justify-center min-h-screen bg-white"
+      >
+        <form
+          [formGroup]="patientForm"
+          (ngSubmit)="onSubmit()"
+          class="w-3/4 bg-[#eee] shadow-lg rounded-xl p-8 border border-gray-100"
+        >
+          <!-- Titre principal -->
+          <h2 class="text-2xl font-bold mb-6 text-gray-800">
+            Créer un patient
+          </h2>
+          <hr class="mb-4 border-[#9f9fff] border-2" />
+
+          <!-- Informations générales -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-600 mb-2">
+              Informations générales
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-gray-700 mb-1">Nom</label>
+                <input
+                  formControlName="nom"
+                  type="text"
+                  placeholder="Nom"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Prénom</label>
+                <input
+                  formControlName="prenom"
+                  type="text"
+                  placeholder="Prénom"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Téléphone</label>
+                <input
+                  formControlName="telephone"
+                  type="tel"
+                  placeholder="Téléphone"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Adresse</label>
+                <input
+                  formControlName="adresse"
+                  type="text"
+                  placeholder="Adresse"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Email</label>
+                <input
+                  formControlName="email"
+                  type="email"
+                  placeholder="Email"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Mot de passe</label>
+                <input
+                  formControlName="password"
+                  type="password"
+                  placeholder="Mot de passe (min 8 caractères)"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Genre</label>
+                <select
+                  class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200"
+                  formControlName="genre"
+                  required
+                >
+                  <option *ngFor="let gender of genre" [value]="gender.value">
+                    {{ gender.label }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1"
+                  >Date de naissance</label
+                >
+                <input
+                  formControlName="dateNaissance"
+                  type="date"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                />
+              </div>
+              <div>
+                <label class="block text-gray-700 mb-1">Statut</label>
+                <div
+                  class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-200 flex items-center space-x-2"
+                >
+                  <input
+                    type="checkbox"
+                    formControlName="actif"
+                    class="form-checkbox h-5 w-5 text-[#9f9fff] focus:ring-[#9f9fff]"
+                  />
+                  <span class="text-gray-700"
+                    >{{ patientForm.get('actif')?.value ? 'Actif' : 'Inactif'
+                    }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-6 border-gray-200" />
+
+          <!-- Carnet médical -->
+          <div>
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+              Carnet médical
+            </h2>
+            <hr class="mb-4 border-[#9f9fff] border-2" />
+            <div formGroupName="dossierMedical">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-gray-700 mb-1"
+                    >Groupe sanguin et Rhésus</label
+                  >
+                  <select
+                    formControlName="groupeSanguin"
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                  >
+                    <option value="">Sélectionner</option>
+                    <option
+                      *ngFor="let groupe of groupeSanguin"
+                      [value]="groupe.value"
+                    >
+                      {{ groupe.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label class="block text-gray-700 mb-1"
+                    >Traitements en cours</label
+                  >
+                  <textarea
+                    formControlName="traitementsEnCours"
+                    rows="2"
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    placeholder="(facultatif)"
+                  ></textarea>
+                </div>
+                <div>
+                  <label class="block text-gray-700 mb-1"
+                    >Antécédents médicaux</label
+                  >
+                  <textarea
+                    formControlName="antecedentsMedicaux"
+                    rows="2"
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    placeholder="(facultatif)"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                <div>
+                  <label class="block text-gray-700 mb-1">Allergies</label>
+                  <textarea
+                    formControlName="allergies"
+                    rows="2"
+                    class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                    placeholder="(facultatif)"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="mt-4">
+                <label class="block text-gray-700 mb-1">Observations</label>
+                <textarea
+                  formControlName="observations"
+                  rows="2"
+                  class="w-full border rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex gap-4 justify-center mt-8">
+            <button
+              type="button"
+              (click)="onCancel()"
+              class="px-6 py-2 rounded border border-blue-400 text-blue-700 bg-white hover:bg-blue-50 transition"
+            >
+              Annuler
+            </button>
+            <button
+              type="submit"
+              [disabled]="!patientForm.valid"
+              class="px-6 py-2 rounded bg-blue-500 text-white font-medium hover:bg-blue-600 transition disabled:opacity-50"
+            >
+              Créer le patient
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

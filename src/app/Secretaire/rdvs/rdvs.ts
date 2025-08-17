@@ -10,15 +10,15 @@ import { FormsModule, NgModel } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { RdvService } from '../../Services/rdv.service';
 import { Rdv, RdvCreatePayload, RdvUpdatePayload } from '../../Interfaces/rdv.interface';
-
+import { CurrentUser } from '../../current-user/current-user';
 
 @Component({
-  selector: 'app-rdv',
-  imports: [RouterLink, CommonModule, FormsModule],
-  templateUrl: './rdv.html',
-  styleUrl: './rdv.css'
+  selector: 'app-rdvs',
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
+  templateUrl: './rdvs.html',
+  styleUrl: './rdvs.css'
 })
-export class RDV  implements OnInit {
+export class Rdvs  implements OnInit {
   searchText = signal('');
   pageSize = 10;
   currentPage = 1;
