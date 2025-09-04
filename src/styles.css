@@ -11,3 +11,5 @@
     --Warning: #ff3838;
     --Pass: #13df00;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

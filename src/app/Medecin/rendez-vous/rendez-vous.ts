@@ -7,13 +7,16 @@ import {
   signal,
 } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { RdvService } from '../../Services/rdv.service';
-import { Rdv, RdvCreatePayload, RdvUpdatePayload } from '../../Interfaces/rdv.interface';
+import { Rdv, RdvUpdatePayload } from '../../Interfaces/rdv.interface';
 import { CurrentUser } from '../../current-user/current-user';
+import { UtilisateursService } from '../../Services/utilisateur.service';
+import { StatutRdv } from '../../Enums/statut-rdv.enum';
+import { AuthService } from '../../Services/auth.service';
 @Component({
   selector: 'app-rendez-vous',
-  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser, RouterModule],
   templateUrl: './rendez-vous.html',
   styleUrl: './rendez-vous.css',
 })
@@ -22,43 +25,64 @@ export class RendezVous implements OnInit {
   pageSize = 10;
   currentPage = 1;
   rendezVous = signal<Rdv[]>([]);
-  rdvList : Rdv[] = []; 
-
+  rdvList: Rdv[] = [];
   selectedRdv: Rdv | null = null;
 
-  constructor(private rdvService: RdvService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private utilisateurService: UtilisateursService
+  ) { }
 
   ngOnInit() {
-    this.rdvService.getRdv().subscribe({
-      next: (rendezVous) => {
-        //  console.log(users);
-        this.rendezVous.set(rendezVous);
-        console.log(rendezVous);
+    const idMedecin = localStorage.getItem('id'); // comme en React
+    const today = new Date().toISOString().split('T')[0]; // format YYYY-MM-DD
 
-        this.goToPage(this.currentPage);
-      },
+    if (!idMedecin) {
+      console.error('Aucun id trouvé pour le médecin connecté');
+      return;
+    }
 
-      error: (err) => console.log('erreur lors du chargement des utilisateurs'),
-    });
+    this.utilisateurService
+      .getRendezVousConfirmeDuMedecin(+idMedecin, today)
+      .subscribe({
+        next: (rendezVous: Rdv[]) => {
+          // Trier comme en React (par date décroissante puis heure)
+          const sorted = rendezVous.sort((a, b) => {
+            const dateA = new Date(a.jour);
+            const dateB = new Date(b.jour);
+            if (dateA.getTime() !== dateB.getTime()) {
+              return dateB.getTime() - dateA.getTime();
+            }
+            return a.heure.localeCompare(b.heure);
+          });
+
+          this.rendezVous.set(sorted);
+          this.goToPage(this.currentPage);
+        },
+        error: (err) =>
+          console.error('Erreur lors du chargement des rendez-vous', err),
+      });
   }
 
   filteredRendezVous = computed(() => {
     const filter = this.searchText().toLowerCase();
     const allRdv = this.rendezVous();
 
-    if (!filter) {
-      return allRdv;
-    }
+    if (!filter) return allRdv;
+
     return allRdv.filter((u) =>
-      Object.values(u).some((v) =>
-        (v ?? '').toString().toLowerCase().includes(filter)
-      )
+      [u.jour, u.heure, u.patientNomComplet, u.medecinNomComplet, u.statut]
+        .filter(Boolean)
+        .some((v) => v.toString().toLowerCase().includes(filter))
     );
   });
 
-  totalPages = computed(() => {
-    return this.filteredRendezVous ? Math.ceil(this.filteredRendezVous().length / this.pageSize) : 0;
-  });
+  totalPages = computed(() =>
+    this.filteredRendezVous
+      ? Math.ceil(this.filteredRendezVous().length / this.pageSize)
+      : 0
+  );
 
   paginatedRendezVous = computed(() => {
     const start = (this.currentPage - 1) * this.pageSize;
@@ -69,10 +93,60 @@ export class RendezVous implements OnInit {
     if (page < 1 || page > this.totalPages()) return;
     this.currentPage = page;
   }
-  // Pour sauvegarder les changements (ajoutez votre propre logique)
+
   saveRendezVous() {
     if (this.selectedRdv) {
       console.log('Rendez-vous modifié :', this.selectedRdv);
     }
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login-page']);
+  }
+
+  openModal(rdv: Rdv) {
+    this.selectedRdv = rdv;
+  }
+
+  closeModal() {
+    this.selectedRdv = null;
+  }
+
+  goToDossierMedical() {
+    if (!this.selectedRdv) return;
+    const id = this.selectedRdv.patientId || this.selectedRdv.id;
+    this.closeModal();
+    this.router.navigate(['/dossier-medical', id]);
+  }
+
+  goToConsultation() {
+    if (!this.selectedRdv) return;
+    if (confirm("Voulez-vous passer en mode consultation ?")) {
+      this.closeModal();
+      this.router.navigate(['/consultation', this.selectedRdv.id]);
+    }
+  }
+
+  cancelRendezVous() {
+    if (!this.selectedRdv) return;
+    if (confirm("Voulez-vous annuler ce rendez-vous ?")) {
+      console.log("Rendez-vous annulé :", this.selectedRdv);
+      // TODO: appel service backend pour annuler
+      this.closeModal();
+    }
+  }
+
+  isUrgences(): boolean {
+    const user = this.authService.getCurrentUser();
+    return user?.authorities?.includes("URGENCES");
+  }
+
+  goToConsultationUrgence() {
+    if (confirm("Voulez-vous passer en mode consultation d’urgence ?")) {
+      this.router.navigate(['/consultation-urgence']);
+    }
+  }
+
+
 }

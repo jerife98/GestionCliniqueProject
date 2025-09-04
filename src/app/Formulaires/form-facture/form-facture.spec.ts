@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreateRdv } from './create-rdv';
+import { FormFacture } from './form-facture';
 
-describe('CreateRdv', () => {
-  let component: CreateRdv;
-  let fixture: ComponentFixture<CreateRdv>;
+describe('FormFacture', () => {
+  let component: FormFacture;
+  let fixture: ComponentFixture<FormFacture>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateRdv]
+      imports: [FormFacture]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CreateRdv);
+    fixture = TestBed.createComponent(FormFacture);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, Input, OnInit, signal } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Patient } from '../../Interfaces/patient.interface';
 import { PatientService } from '../../Services/patient.service';
 import { CurrentUser } from '../../current-user/current-user';
+import { Rdv } from '../../Interfaces/rdv.interface';
 
 interface SelectOption {
   value : string;
@@ -13,20 +14,20 @@ interface SelectOption {
 
 @Component({
   selector: 'app-malade',
-  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser, RouterModule],
   templateUrl: './malade.html',
   styleUrl: './malade.css'
 })
 export class Malade implements OnInit{
   searchText = signal('');
   pageSize = 10;
-  currentPage = 1;
+  currentPage = signal(1);
   patients = signal<Patient[]> ([]);
 
 
   selectedUser: Patient | null = null;
 
-  constructor(private patientService: PatientService ){}
+  constructor(private patientService: PatientService, private router: Router ){}
 
     ngOnInit() {
       this.patientService.getPatients().subscribe({
@@ -35,7 +36,7 @@ export class Malade implements OnInit{
           this.patients.set(users);
           console.log(users);
           
-        this.goToPage(this.currentPage)},
+        this.goToPage(this.currentPage())},
         
           
         error: err => console.log('erreur lors du chargement des utilisateurs')
@@ -62,13 +63,13 @@ totalPages = computed(() => {
 });
 
 paginatedUsers = computed(() => {
-  const start = (this.currentPage - 1) * this.pageSize;
+  const start = (this.currentPage() - 1) * this.pageSize;
   return this.filteredUsers().slice(start, start + this.pageSize);
 });
 
 goToPage(page: number) {
   if (page < 1 || page > this.totalPages()) return;
-  this.currentPage = page;
+  this.currentPage.set(page);
 }
 
 // Fonction appelée au clic sur une ligne
@@ -96,5 +97,41 @@ goToPage(page: number) {
       // Puis éventuellement remettre à null ou rafraichir la liste
     }
   }
+
+      logout() {
+    // si tu stockes un token/localStorage :
+    localStorage.removeItem('token'); 
+    // navigation vers la page de login
+    this.router.navigate(['/login-page']);
+  }
+
+    //pour supprimer un patient
+    deletePatient(patient: Patient) {
+      console.log('suppression demandée pour :', patient);
+  
+      if (!patient.id) {
+        alert('Impossible de supprimer : ID patient manquant.');
+        return;
+      }
+      if (
+        confirm(
+          `Voulez-vous vraiment supprimer l'utilisateur ${patient.nom} ${patient.prenom} ?`
+        )
+      ) {
+        this.patientService.deletePatient(patient.id).subscribe({
+          next: () => {
+            // Mise à jour locale de la liste
+            this.patients.set(
+              this.patients().filter((u) => u.id !== patient.id)
+            );
+            alert('Utilisateur supprimé avec succès.');
+          },
+          error: (err) => {
+            console.error('Erreur lors de la suppression :', err);
+            alert("Erreur lors de la suppression de l'utilisateur.");
+          },
+        });
+      }
+    }
 
 }

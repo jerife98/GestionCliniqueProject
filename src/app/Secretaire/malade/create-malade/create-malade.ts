@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PatientService } from '../../../Services/patient.service';
 import { CommonModule } from '@angular/common';
 import { Patient, PatientCreatePayload } from '../../../Interfaces/patient.interface';
@@ -13,7 +13,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-create-malade',
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser, RouterModule],
   templateUrl: './create-malade.html',
   styleUrl: './create-malade.css'
 })
@@ -89,7 +89,7 @@ export class CreateMalade {
         next: (result) => {
           alert('Patient créé avec succès !');
           this.resetForm();
-          this.router.navigate(['/patients']);
+          this.router.navigate(['/Malade']);
         },
         error: (err) => {
           console.error('Erreur création patient:', err);
@@ -116,5 +116,12 @@ export class CreateMalade {
       }
     });
     this.isVisible = false;
+  }
+
+      logout() {
+    // si tu stockes un token/localStorage :
+    localStorage.removeItem('token'); 
+    // navigation vers la page de login
+    this.router.navigate(['/login-page']);
   }
 }

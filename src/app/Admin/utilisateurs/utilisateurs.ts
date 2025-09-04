@@ -4,7 +4,7 @@ import {
   User,
   UserUpdatePayload,
 } from '../../Interfaces/user.interface';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { log } from 'console';
@@ -13,7 +13,7 @@ import { CurrentUser } from '../../current-user/current-user';
 
 @Component({
   selector: 'app-utilisateurs',
-  imports: [RouterLink, CommonModule, FormsModule, UserDetails, CurrentUser],
+  imports: [RouterLink, CommonModule, FormsModule, UserDetails, CurrentUser, RouterModule],
   templateUrl: './utilisateurs.html',
   styleUrl: './utilisateurs.css',
 })
@@ -28,7 +28,7 @@ export class Utilisateurs implements OnInit {
 
   showUserModal = false;
 
-  constructor(private utilisateurService: UtilisateursService) {}
+  constructor(private utilisateurService: UtilisateursService, private router: Router) {}
 
   ngOnInit() {
     this.utilisateurService.getUtilisateurs().subscribe({
@@ -165,5 +165,10 @@ export class Utilisateurs implements OnInit {
         },
       });
     }
+  }
+
+       logout() {
+    localStorage.removeItem('token'); 
+    this.router.navigate(['/login-page']);
   }
 }

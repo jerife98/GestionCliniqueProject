@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input, Input, OnInit, signal } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { Patient } from '../../Interfaces/patient.interface';
 import { PatientService } from '../../Services/patient.service';
 import { CurrentUser } from '../../current-user/current-user';
 
 @Component({
   selector: 'app-calendrier',
-  imports: [RouterLink, CommonModule, FormsModule, CurrentUser],
+  imports: [RouterLink, CommonModule, FormsModule, CurrentUser, RouterModule],
   templateUrl: './calendrier.html',
   styleUrl: './calendrier.css'
 })
@@ -21,7 +21,7 @@ export class Calendrier implements OnInit{
 
   selectedUser: Patient | null = null;
 
-  constructor(private patientService: PatientService ){}
+  constructor(private patientService: PatientService, private router: Router ){}
 
     ngOnInit() {
       this.patientService.getPatients().subscribe({
@@ -90,6 +90,11 @@ goToPage(page: number) {
       
       // Puis éventuellement remettre à null ou rafraichir la liste
     }
+  }
+
+     logout() {
+    localStorage.removeItem('token'); 
+    this.router.navigate(['/login-page']);
   }
 
 }

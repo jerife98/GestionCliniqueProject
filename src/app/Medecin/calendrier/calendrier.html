@@ -1,56 +1,36 @@
-<div class="flex h-screen bg-white">
+<div class="flex items-stretch bg-white min-h-screen">
   <!-- sidebar -->
-  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
-    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+  <div class="hidden md:flex flex-col w-64 bg-[url('/side_bar.png')] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[url('/side_bar.png')] py-15">
       <img src="logo_clinic.png" alt="logo de la clinique" />
     </div>
-    <div class="flex flex-col h-screen">
-      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+    <div class="flex flex-col h-full">
+      <nav class="flex-1 px-3 py-4 bg-[url('/side_bar.png')]">
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/rendez-vous']"
-          routerLinkActive="active"
+routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
         >
           <i class="fa fa-clock-o h-6 w-6 mr-2" style="font-size: 25px;"></i> Rendez-vous
         </a>
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/consultations']"
-          routerLinkActive="active"
-        >
-          <i class='fas fa-user-md h-6 w-6 mr-2' style="font-size: 25px;"></i>
-          Consultations 
-        </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/messagerie']"
-          routerLinkActive="active"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6 mr-2"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5m.75-9 3-3 2.148 2.148A12.061 12.061 0 0 1 16.5 7.605"
-            />
-          </svg>
-          Messagerie
-        </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/calendrier']"
-          routerLinkActive="active"
+routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
         >
 
           <i class="fa fa-calendar h-6 w-6 mr-2" style="font-size: 25px;"></i>
           Calendrier
         </a>
       </nav>
+
+      <div class="mt-auto px-3 py-4">
+        <button
+          class="w-full flex items-center px-4 py-2 text-black hover:bg-red-500 hover:text-white rounded-lg  bg-red-500"
+          (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+        </button>
+      </div>
     </div>
   </div>
     <!-- Main content -->
@@ -76,6 +56,14 @@
           </li>
         </ol>
       </nav>
+
+      <div class="mt-auto px-3 py-4">
+        <button
+          class="w-full flex items-center px-4 py-2 text-black hover:bg-red-500 hover:text-white rounded-lg  bg-red-500"
+          (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+        </button>
+      </div>
       </div>
       <div class="flex items-center space-x-4">
         <button class="relative">

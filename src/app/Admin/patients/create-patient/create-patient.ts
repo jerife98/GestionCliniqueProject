@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { PatientService } from '../../../Services/patient.service';
 import { CommonModule } from '@angular/common';
 import { Patient, PatientCreatePayload } from '../../../Interfaces/patient.interface';
@@ -14,7 +14,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-create-patient',
-  imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser],
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, CurrentUser, RouterModule],
   templateUrl: './create-patient.html',
   styleUrl: './create-patient.css'
 })
@@ -116,5 +116,10 @@ export class CreatePatient {
       }
     });
     this.isVisible = false;
+  }
+
+       logout() {
+    localStorage.removeItem('token'); 
+    this.router.navigate(['/login-page']);
   }
 }

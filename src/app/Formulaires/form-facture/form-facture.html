@@ -1,0 +1,76 @@
+<div class="facture-container" *ngIf="!loading && factureForm">
+  <form [formGroup]="factureForm" (ngSubmit)="handleGenererFacture()">
+    <h2>🏥 Détail de la Facture</h2>
+    <hr />
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>👤 Nom du Patient</label>
+        <input type="text" formControlName="patientNomComplet" readonly />
+      </div>
+      <div class="form-group">
+        <label>📅 Date de création</label>
+        <input type="text" formControlName="dateEmission" readonly />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Heure de création</label>
+        <input type="text" formControlName="heureEmission" readonly />
+      </div>
+      <div class="form-group">
+        <label>Service médical</label>
+        <input type="text" formControlName="serviceMedicalNom" readonly />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>💰 Montant (XAF)</label>
+        <input type="text" formControlName="montant" readonly />
+      </div>
+      <div class="form-group">
+        <label>💳 Mode de Paiement</label>
+        <select formControlName="modePaiement">
+          <option value="ESPECES">💵 Espèces</option>
+          <option value="CARTE_BANCAIRE">💳 Carte Bancaire</option>
+          <option value="VIREMENT">🏦 Virement</option>
+          <option value="CHEQUE">📄 Chèque</option>
+          <option value="MOBILE_MONEY">📱 Mobile Money</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="button-row">
+      <button type="button" class="cancel-button" (click)="handleAnnuler()">Annuler</button>
+      <button type="button" class="submit-button" (click)="handleGenererFacture()">
+        Payer et générer la facture
+      </button>
+    </div>
+  </form>
+
+  <!-- Popup confirmation -->
+  <div class="overlay" *ngIf="showValidationPopup">
+    <div class="popup">
+      <h3>Confirmation</h3>
+      <p>Voulez-vous payer et générer cette facture ?</p>
+      <div class="button-group">
+        <button class="confirm" (click)="handleValidationConfirm()">Oui</button>
+        <button class="cancel" (click)="handleValidationCancel()">Non</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div class="overlay" *ngIf="showLoader">
+    <div class="loader">
+      <h3>Génération en cours</h3>
+      <div class="spinner"></div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading-container">
+  <p>Chargement de la facture...</p>
+</div>

@@ -5,14 +5,14 @@ import { Role, User, UserCreatePayload, UserUpdatePayload } from '../Interfaces/
 import { AuthService } from './auth.service';
 import { catchError, map } from 'rxjs/operators';
 import { tap } from 'rxjs/operators';
+import { Rdv } from '../Interfaces/rdv.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UtilisateursService {
   private apiUrl = 'http://localhost:8081/Api/V1/clinique/utilisateurs'; // Change to your actual backend URL
   private apiUrlById = 'http://localhost:8081/Api/V1/clinique/utilisateurs/{idUtilisateur}';
 
-  // Inject AuthService into the constructor
-  constructor(private http: HttpClient, private authService: AuthService) {} // Inject AuthService
+  constructor(private http: HttpClient, private authService: AuthService) { } // Inject AuthService
 
   getUtilisateurs(): Observable<User[]> {
     const token = this.authService.getToken();
@@ -43,14 +43,14 @@ export class UtilisateursService {
       return throwError(() => new Error('No authentication token found.')); // Retourne un Observable qui émet une erreur
     }
 
-  
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-      return this.http.post<UserCreatePayload>(this.apiUrl, user, { headers });
-   
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.post<UserCreatePayload>(this.apiUrl, user, { headers });
+
   }
 
-    // Nouvelle méthode pour secrétaires
+  // Nouvelle méthode pour secrétaires
   getMedecinsForSecretaire(): Observable<User[]> {
     const token = this.authService.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
@@ -60,11 +60,24 @@ export class UtilisateursService {
     });
   }
 
-    getMedecinsByService(service: string): Observable<User[]> {
+  getMedecinsByService(service: string): Observable<User[]> {
     const token = this.authService.getToken();
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
     // L'URL correspond bien à ce que tu as donné
-      return this.http.get<User[]>(`${this.apiUrl}/by-service/${service}`, { headers });
+    return this.http.get<User[]>(`${this.apiUrl}/by-service/${service}`, { headers });
+  }
+
+  getMedecinRdvByStatus(medecinNomComplet: string, statut: string): Observable<Rdv[]> {
+    const token = this.authService.getToken();
+    if (!token) return new Observable<Rdv[]>();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<Rdv[]>(`${this.apiUrl}/rendezvous/medecin/status`, {
+      headers,
+      params: {
+        medecinNomComplet: medecinNomComplet,
+        statut: statut
+      }
+    });
   }
 
   // Méthode GET pour trouver un utilisateur par ID
@@ -81,6 +94,11 @@ export class UtilisateursService {
     const headers = token ? new HttpHeaders().set('Authorization', `Bearer ${token}`) : undefined;
     return this.http.get<User[]>(`${this.apiUrl}/by-service/${serviceMedical}`, { headers });
   }
+
+  getRendezVousConfirmeDuMedecin(idMedecin: number, date: string): Observable<Rdv[]> {
+    return this.http.get<Rdv[]>(`${this.apiUrl}/utilisateurs/${idMedecin}/rendez-vous/confirmed/${date}`);
+  }
+
 
   // Méthode UPDATE pour mettre à jour un utilisateur
 

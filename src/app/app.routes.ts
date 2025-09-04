@@ -7,12 +7,9 @@ import { CreateUser } from './Admin/utilisateurs/create-user/create-user';
 import { Patients } from './Admin/patients/patients';
 import { CreatePatient } from './Admin/patients/create-patient/create-patient';
 import { RendezVous } from './Medecin/rendez-vous/rendez-vous';
-import { Consultations } from './Medecin/consultations/consultations';
 import { Calendrier } from './Medecin/calendrier/calendrier';
 import { Rdvs } from './Secretaire/rdvs/rdvs';
-import { CreateRdv } from './Medecin/rendez-vous/create-rdv/create-rdv';
 import { CreateRdv as SecretaireCreateRdv } from './Secretaire/rdvs/create-rdv/create-rdv';
-import { create } from 'domain';
 import { Malade } from './Secretaire/malade/malade';
 import { CreateMalade } from './Secretaire/malade/create-malade/create-malade';
 import { Facture } from './Secretaire/facture/facture';
@@ -64,18 +61,6 @@ export const routes: Routes = [
   {
     path: 'medecin',
     component: RendezVous,
-    canActivate: [AuthRoleGuard],
-    data: { roles: ['MEDECIN'] }
-  },
-  {
-    path: 'Create-rdv',
-    component: CreateRdv,
-    canActivate: [AuthRoleGuard],
-    data: { roles: ['MEDECIN'] }
-  },
-  {
-    path: 'consultations',
-    component: Consultations,
     canActivate: [AuthRoleGuard],
     data: { roles: ['MEDECIN'] }
   },

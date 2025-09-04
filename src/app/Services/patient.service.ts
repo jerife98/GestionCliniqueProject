@@ -80,6 +80,18 @@ createPatient(patient: PatientCreatePayload): Observable<Patient> {
   }
 
 
-
+  // Méthode DELETE pour supprimer un rendez-vous
+  deletePatient(patientId: number): Observable<any> {
+    const token = this.authService.getToken();
+    if(!token) {
+      return throwError(() => new Error('No authentication token found.'));
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    //L'URL correspond bien à celui fourni
+    const url = `${this.apiUrl}/${patientId}`;
+    return this.http.delete(url, {headers, responseType: 'text'});
+  }
 
 }

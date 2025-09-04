@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Rendez-vous du {{ data.date }}</h2>
+
+<mat-dialog-content class="space-y-3">
+  <ng-container *ngIf="data.rdvs.length > 0; else noRdv">
+    <div *ngFor="let rdv of data.rdvs" 
+         class="p-3 rounded-lg shadow"
+         [ngStyle]="{'background-color': isPast(rdv.jour, rdv.heure) ? '#ffe5e5' : '#e5f0ff',
+                     'color': isPast(rdv.jour, rdv.heure) ? 'red' : 'black'}">
+      <p><strong>👤 Patient :</strong> {{ rdv.patient.prenom }} {{ rdv.patient.nom }}</p>
+      <p><strong>👨‍⚕️ Médecin :</strong> Dr. {{ rdv.utilisateur.nom }}</p>
+      <p><strong>⏰ Heure :</strong> {{ rdv.heure || 'Non précisée' }}</p>
+      <p><strong>📝 Notes :</strong> {{ rdv.notes || 'Aucune' }}</p>
+    </div>
+  </ng-container>
+
+  <ng-template #noRdv>
+    <p class="text-gray-500">Aucun rendez-vous ce jour.</p>
+  </ng-template>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Fermer</button>
+</mat-dialog-actions>

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UtilisateursService } from '../../../Services/utilisateur.service';
 import { UserCreatePayload } from '../../../Interfaces/user.interface'; 
 import { CurrentUser } from '../../../current-user/current-user';
@@ -13,7 +13,7 @@ interface SelectOption {
 
 @Component({
   selector: 'app-create-user',
-  imports: [RouterLink, CommonModule, ReactiveFormsModule, CurrentUser],
+  imports: [RouterLink, CommonModule, ReactiveFormsModule, CurrentUser, RouterModule],
   templateUrl: './create-user.html',
   styleUrl: './create-user.css'
 })
@@ -183,5 +183,10 @@ export class CreateUser {
     } else {
       return 'Erreur lors de la création. Veuillez réessayer.';
     }
+  }
+
+       logout() {
+    localStorage.removeItem('token'); 
+    this.router.navigate(['/login-page']);
   }
 }

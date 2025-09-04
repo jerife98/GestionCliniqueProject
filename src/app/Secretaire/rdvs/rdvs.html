@@ -1,44 +1,48 @@
-<div class="flex h-screen bg-white">
+<div class="flex items-stretch bg-white min-h-screen">
   <!-- sidebar -->
   <div class="hidden md:flex flex-col w-64 bg-[url('/side_bar.png')] mr-5">
     <div class="flex items-center justify-center h-16 bg-[url('/side_bar.png')] py-15">
       <img src="logo_clinic.png" alt="logo de la clinique" />
     </div>
-    <div class="flex flex-col h-screen">
+    <div class="flex flex-col h-full">
       <nav class="flex-1 px-3 py-4 bg-[url('/side_bar.png')]">
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/rendez-vous']"
-          routerLinkActive="active"
-        >
-          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i>
+        <!-- Rendez-vous -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/rendez-vous']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-calendar-check h-6 w-6 mr-2"></i>
           Rendez-vous
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/Malade']"
-          routerLinkActive="active"
-        >
-          <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
+
+        <!-- Patients -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/Malade']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-user-injured h-6 w-6 mr-2"></i>
           Patients
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/calendar']"
-          routerLinkActive="active"
-        >
-        <i class='far fa-calendar-alt'></i>
+
+        <!-- Calendrier -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/calendar']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-calendar-alt h-6 w-6 mr-2"></i>
           Calendrier
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/facture']"
-          routerLinkActive="active"
-        >
-          <i class='far fa-file-alt h-6 w-6 mr-2' style="font-size: 25px"></i>
+
+        <!-- Facture -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/facture']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-file-invoice-dollar h-6 w-6 mr-2"></i>
           Facture
         </a>
       </nav>
+
+      <div class="mt-auto px-3 py-4">
+        <button
+          class="w-full flex items-center px-4 py-2 text-black hover:bg-red-500 hover:text-white rounded-lg  bg-red-500"
+          (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+        </button>
+      </div>
+
     </div>
   </div>
   <!-- Main content -->
@@ -47,43 +51,23 @@
       <div>
         <h1 class="text-3xl font-bold text-gray-800">Gestion des Rendez-vous</h1>
         <nav class="flex mt-3" aria-label="Breadcrumb">
-          <ol
-            class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
-          >
+          <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
             <li>
               <div class="flex items-center">
-                <a
-                  class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
-                  [routerLink]="['/rdv']"
-                  routerLinkActive="active"
-                >
-                  Liste des Rendez-vous</a
-                >
+                <a class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
+                  [routerLink]="['/rdv']" routerLinkActive="active">
+                  Liste des Rendez-vous</a>
               </div>
             </li>
             <li aria-current="page">
               <div class="flex items-center">
-                <svg
-                  class="rtl:rotate-180 w-3 h-3 text-gray-700 mx-1 hover:text-blue-600"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 6 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 9 4-4-4-4"
-                  />
+                <svg class="rtl:rotate-180 w-3 h-3 text-gray-700 mx-1 hover:text-blue-600" aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m1 9 4-4-4-4" />
                 </svg>
-                <a
-                  class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
-                  [routerLink]="['/creates-rdv']"
-                  routerLinkActive="active"
-                  >Création des rendez-vous</a
-                >
+                <a class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
+                  [routerLink]="['/creates-rdv']" routerLinkActive="active">Création des rendez-vous</a>
               </div>
             </li>
           </ol>
@@ -91,9 +75,7 @@
       </div>
       <div class="flex items-center space-x-4">
         <button class="relative">
-          <span
-            class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Asec)]"
-          ></span>
+          <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-[var(--Asec)]"></span>
           <i class="far fa-bell text-3xl"></i>
         </button>
         <app-current-user></app-current-user>
@@ -102,19 +84,11 @@
 
     <!-- Barre de recherche -->
     <div class="my-4 flex justify-between mx-4">
-      <input
-        type="text"
-        [(ngModel)]="searchText"
-        placeholder="Tapez votre recherche ici"
-        class="md:w-3/5 p-3 rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-[var(--Aprim)]"
-      />
-      <button
-        type="button"
-        class="bg-[#9f9fff] rounded-3xl p-3 w-1/5 text-white"
-        [routerLink]="['/creates-rdv']"
-        routerLinkActive="active"
-      >
-        Ajouter un rendez-vous
+      <input type="text" [(ngModel)]="searchText" placeholder="Tapez votre recherche ici"
+        class="md:w-3/5 p-3 rounded-4xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-[var(--Aprim)]" />
+      <button type="button" class="bg-[#9f9fff] rounded-3xl p-3 w-1/5 text-white font-bold"
+        [routerLink]="['/creates-rdv']" routerLinkActive="active">
+        + Ajouter un rendez-vous
       </button>
     </div>
 
@@ -124,36 +98,29 @@
         <div>
           <h2 class="text-3xl font-bold text-gray-700 mb-5">Rendez-vous</h2>
         </div>
-        <div
-          class="flex justify-center items-center gap-2 mb-5"
-          *ngIf="totalPages() > 1"
-        >
-          <button
-            class="px-3 py-1 rounded border text-gray-500"
-            [disabled]="currentPage === 1"
-            (click)="goToPage(currentPage - 1)"
-          >
+        <!-- Pagination -->
+        <div class="flex justify-center items-center gap-2 my-4" *ngIf="totalPages() > 1">
+          <!-- Bouton précédent -->
+          <button class="px-3 py-1 rounded-lg border bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
             Précédent
           </button>
-          <ng-container
-            *ngFor="let page of [].constructor(totalPages); let i = index"
-          >
-            <button
-              class="px-3 py-1 rounded border"
-              [class.bg-blue-200]="currentPage === i+1"
-              (click)="goToPage(i+1)"
-            >
+
+          <!-- Boutons numéros -->
+          <ng-container *ngFor="let page of [].constructor(totalPages()); let i = index">
+            <button class="px-3 py-1 rounded-lg border" [class.bg-[#9f9fff]]="currentPage === i + 1"
+              [class.text-white]="currentPage === i + 1" (click)="goToPage(i + 1)">
               {{ i + 1 }}
             </button>
           </ng-container>
-          <button
-            class="px-3 py-1 rounded border text-gray-500"
-            [disabled]="currentPage === totalPages()"
-            (click)="goToPage(currentPage + 1)"
-          >
+
+          <!-- Bouton suivant -->
+          <button class="px-3 py-1 rounded-lg border bg-white text-gray-600 hover:bg-gray-100 disabled:opacity-50"
+            [disabled]="currentPage === totalPages()" (click)="goToPage(currentPage + 1)">
             Suivant
           </button>
         </div>
+
       </div>
       <hr class="mb-4 border-[#9f9fff] border-2" />
       <!-- Pagination -->
@@ -163,42 +130,37 @@
         <!-- Tableau des utilisateurs -->
         <div class="overflow-x-auto rounded-lg shadow border border-white mt-6">
           <table class="min-w-full divide-y divide-white text-sm">
-            <thead class="bg-[#9f9fff] text-white">
+            <thead class="bg-[#9f9fff] text-white text-left">
               <tr>
-                <th class="px-4 py-2">Date</th>
+                <th class="px-4 py-2">Jour</th>
                 <th class="px-4 py-2">Heure</th>
-                <th class="px-4 py-2">Salle</th>
-                <th class="px-4 py-2">Adresse</th>
-                <th class="px-4 py-2">Nom et prenom</th>
-                <th class="px-4 py-2">Statut</th>
+                <th class="px-4 py-2">Service Médical</th>
+                <th class="px-4 py-2">Nom du patient</th>
+                <th class="px-4 py-2">Nom du Médecin</th>
+                <th class="px-4 py-2">Nom de la Salle</th>
+                <!-- <th class="px-4 py-2">Statut</th> -->
+                <th class="px-4 py-2 text-center">Action</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-50">
-              <tr
-                *ngFor="let rendezVous of paginatedRendezVous()"
-                style="cursor: pointer"
-              >
+            <tbody>
+              <tr *ngFor="let rendezVous of paginatedRendezVous()" style="cursor: pointer"
+                class="bg-white border-b hover:bg-gray-50" (click)="viewRendezVous(rendezVous)">
                 <td class="px-4 py-2">{{ rendezVous.jour }}</td>
                 <td class="px-4 py-2">{{ rendezVous.heure }}</td>
                 <td class="px-4 py-2">{{ rendezVous.serviceMedical }}</td>
-                <td class="px-4 py-2">{{ rendezVous.nomSalle }}</td>
                 <td class="px-4 py-2">{{ rendezVous.patientNomComplet }}</td>
-                <td class="px-4 py-2 flex space-x-2">
-                  <button
-                    class="text-blue-600 hover:text-blue-800"
-                  >
-                    <i
-                      class="fas fa-toggle-off"
-                      style="
-                        transform: rotate(90deg);
-                        display: inline-block;
-                        font-size: 20px;
-                      "
-                    ></i>
+                <td class="px-4 py-2">{{ rendezVous.medecinNomComplet }}</td>
+                <td class="px-4 py-2">{{ rendezVous.nomSalle }}</td>
+                <td class="px-4 py-2 flex items-center justify-center gap-3">
+                  <button class="p-2 rounded-sm bg-blue-100 hover:bg-blue-200 text-blue-600 toggle-btn"
+                    (click)="isToggled = !isToggled"
+                    [disabled]="rendezVous.statut === 'CONFIRME'" (click)="annulerRdv(rendezVous, $event)">
+                    <i class="fas" [ngClass]="isToggled ? 'fa-toggle-on' : 'fa-toggle-off'"></i>
                   </button>
-                  <button class="text-red-600 hover:text-red-800">
+                  <button class="p-2 rounded-sm bg-red-100 hover:bg-red-200 text-red-600"
+                    [disabled]="rendezVous.statut === 'TERMINE'" (click)="supprimerRdv(rendezVous, $event)">
                     <!-- Icône supprimer -->
-                    <i class="far fa-trash-alt" style="font-size: 20px"></i>
+                    <i class="far fa-trash-alt"></i>
                   </button>
                 </td>
               </tr>

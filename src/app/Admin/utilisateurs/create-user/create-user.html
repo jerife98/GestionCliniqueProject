@@ -1,16 +1,16 @@
-<div class="flex h-full bg-white">
+<div class="flex items-stretch bg-white min-h-screen">
   <!-- sidebar -->
-  <div class="hidden h-full md:flex flex-col w-64 bg-[#feffef] mr-5">
-    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+  <div class="hidden h-full md:flex flex-col w-64 bg-[url('/side_bar.png')] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[url('/side_bar.png')] py-15">
       <img src="logo_clinic.png" alt="logo de la clinique" />
     </div>
-    <div class="flex flex-col h-screen">
-      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
+    <div class="flex flex-col h-full">
+      <nav class="flex-1 px-3 py-4 bg-[url('/side_bar.png')]">
         <a
           href="#"
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/dashboard']"
-          routerLinkActive="active"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
         >
           <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Dashboard
         </a>
@@ -18,7 +18,7 @@
           href="#"
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/utilisateurs']"
-          routerLinkActive="active"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
         <a
           class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
           [routerLink]="['/patients']"
-          routerLinkActive="active"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +73,15 @@
           </svg>
           Messagerie
         </a>
-      </nav>
+</nav>
+
+      <div class="mt-auto px-3 py-4">
+        <button
+          class="w-full flex items-center px-4 py-2 text-black hover:bg-red-500 hover:text-white rounded-lg  bg-red-500"
+          (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+        </button>
+      </div>
     </div>
   </div>
   <!-- Main content -->
@@ -92,7 +100,7 @@
                 <a
                   class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white"
                   [routerLink]="['/utilisateurs']"
-                  routerLinkActive="active"
+                  routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
                 >
                   Liste des Utilisateurs</a
                 >
@@ -118,7 +126,7 @@
                 <a
                   class="ms-1 text-sm font-medium text-gray-500 md:ms-2 dark:text-gray-400"
                   [routerLink]="['/create-user']"
-                  routerLinkActive="active"
+                  routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }"
                   >Création des Utilisateurs</a
                 >
               </div>

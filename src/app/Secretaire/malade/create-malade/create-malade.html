@@ -1,47 +1,48 @@
-<div class="flex h-screen bg-white">
+<div class="flex items-stretch bg-white min-h-screen">
   <!-- sidebar -->
-  <div class="hidden md:flex flex-col w-64 bg-[#feffef] mr-5">
-    <div class="flex items-center justify-center h-16 bg-[#feffef] py-15">
+  <div class="hidden md:flex flex-col w-64 bg-[url('/side_bar.png')] mr-5">
+    <div class="flex items-center justify-center h-16 bg-[url('/side_bar.png')] py-15">
       <img src="logo_clinic.png" alt="logo de la clinique" />
     </div>
-    <div class="flex flex-col h-screen">
-      <nav class="flex-1 px-3 py-4 bg-[#feffef]">
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/rendez-vous']"
-          routerLinkActive="active"
-        >
-          <i class="fas fa-chart-pie h-6 w-6 mr-2"></i> Rendez-vous
+    <div class="flex flex-col h-full">
+      <nav class="flex-1 px-3 py-4 bg-[url('/side_bar.png')]">
+        <!-- Rendez-vous -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/rendez-vous']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-calendar-check h-6 w-6 mr-2"></i>
+          Rendez-vous
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/Malade']"
-          routerLinkActive="active"
-        >
-          <i class="fas fa-user-md h-6 w-6 mr-2" style="font-size: 25px"></i>
+
+        <!-- Patients -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/Malade']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-user-injured h-6 w-6 mr-2"></i>
           Patients
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/calendar']"
-          routerLinkActive="active"
-        >
-          <i
-            class="far fa-calendar-alt h-6 w-6 mr-2"
-            style="font-size: 25px"
-          ></i>
+
+        <!-- Calendrier -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/calendar']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-calendar-alt h-6 w-6 mr-2"></i>
           Calendrier
         </a>
-        <a
-          class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff] active:bg-[#9f9fff]"
-          [routerLink]="['/facture']"
-          routerLinkActive="active"
-        >
-          <i class="far fa-file-alt h-6 w-6 mr-2" style="font-size: 25px"></i>
 
+        <!-- Facture -->
+        <a class="flex items-center px-4 py-2 mt-2 text-black hover:bg-[#9f9fff]" [routerLink]="['/facture']"
+          routerLinkActive="bg-[#9f9fff] text-white" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-file-invoice-dollar h-6 w-6 mr-2"></i>
           Facture
         </a>
       </nav>
+
+      <div class="mt-auto px-3 py-4">
+        <button
+          class="w-full flex items-center px-4 py-2 text-black hover:bg-red-500 hover:text-white rounded-lg  bg-red-500"
+          (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
+        </button>
+      </div>
+
     </div>
   </div>
   <!-- Main content -->

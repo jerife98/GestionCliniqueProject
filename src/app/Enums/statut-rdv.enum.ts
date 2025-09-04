@@ -1,0 +1,7 @@
+export enum StatutRdv {
+  CONFIRME = "CONFIRME",
+  EN_ATTENTE = "EN_ATTENTE",
+  ENCOURS = "ENCOURS",
+  ANNULE = "ANNULE",
+  TERMINE = "TERMINE"
+}
